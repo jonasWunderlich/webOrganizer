@@ -1,5 +1,247 @@
 body {
   padding: 20px;
   margin: 10px;
-  background: blue;
+}
+
+
+
+.contextgroup {
+  margin: 0.2em 1.3em 0 0.3em;
+  display:inline;
+  &:hover {
+    border-top: 10px solid #E8FFCF;
+  }
+}
+
+.contextgroup.googleblock {
+  margin: 0;
+}
+
+div.panel  {
+  font-size: 16px;
+  width: 100px;
+  display: inline-table;
+  .content {
+    box-shadow: -5px 8px 14px -6px #868686;
+  }
+}
+
+
+.notab, .tabbutton {
+  width: 20px;
+  height: 15px;
+  margin-top: 4px;
+}
+
+.tabbutton {
+  background: #087DB4;
+  width: 50%;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 0;
+}
+
+.itsatab {
+  .head {
+    background: #353535;
+  }
+  .infocontent,
+  .infocontent a {
+    background: #353535;
+    color: #FFFFFF;
+  }
+}
+
+
+.panel.image,
+.panel.image .head,
+.panel.image .infocontent,
+.panel.image p {
+  background: none;
+}
+.panel.image p {
+  color: #FFFFFF;
+  opacity: .7;
+}
+
+.panel.document,
+.panel.document .head,
+.panel.document .infocontent,
+.panel.document p{
+  background:none;
+  width: 105px !important;
+}
+.panel.document .infocontent {
+  background: url("images/document.png") no-repeat;
+}
+
+.nocontext {
+  .panel.document {
+    .content {
+      background: url("images/document.png") no-repeat;
+    }
+    .infocontent {
+      background: none;
+    }
+  }
+}
+
+.head {
+  background: #E9E9E9;
+  padding: 4px;
+  height: 16px;
+}
+
+.infocontent {
+  background: #FFFFFF;
+  height: 104px;
+}
+
+
+div.link.refzero  {
+}
+div.tab {
+  margin-right:0;
+  border-right:4px dotted #FFFFFF;
+}
+
+/* Eingetippte Adresse */
+div.typed  {
+  width:120px;
+  .infocontent {
+    background: #5A5A5A url("images/blockquote.png") no-repeat bottom right;
+    a {
+      color: #FFFFFF;
+    }
+  }
+}
+
+
+/* Extern aufgerufene Adresse */
+div.auto_toplevel,
+div.keyword {
+    width: 160px;
+}
+div.auto_toplevel .infocontent a,
+div.keyword .infocontent a {
+    color:  #000;
+}
+div.auto_toplevel .infocontent {
+    background: #ABCBDA url("images/blockquote.png") no-repeat bottom right;
+}
+div.keyword .infocontent {
+    background: #C0DAAB url("images/blockquote.png") no-repeat bottom right;
+}
+
+
+
+/* Google Suchergebnisse */
+div.google {
+  box-shadow:none;
+  margin: 0 1em 0 .4em;
+  width:129px;
+  .head {
+    background: none;
+    opacity: 0;
+  }
+  .content {
+    background: url("images/searchbubble.png") no-repeat;
+    padding-left: 6px;
+  }
+  .infocontent {
+    background:none !important;
+    a {
+      color:#505050;
+      font-weight:bold;
+    }
+  }
+}
+
+
+div.mail {
+  box-shadow:none;
+  width:129px;
+  .head {}
+  .content {
+    box-shadow: none;
+  }
+  .infocontent {
+    background: none;
+    background: #C9B771 url("images/mail-04.png") 6 48 no-repeat;
+  }
+}
+
+
+/* Müllpanel*/
+div.empty  {
+  display:none;
+}
+
+
+
+
+div.bookmark {
+  a {
+    color: #000 !important;
+  }
+}
+
+
+/*Seitenaufrufe */
+div.panel.rel_big {   width:300px;}
+div.panel.rel_some {  width:200px;}
+div.panel.rel_twice { width:150px;}
+
+/* Query-Importance */
+div.lessimportant  {
+  background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
+  width:90px;
+  opacity: .8;
+  font-size: 0.8em;
+  border:0;
+}
+div.unimportant  {
+  background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
+  width:80px;
+  opacity: .6;
+  font-size: 0.6em;
+  border:0;
+}
+
+
+
+
+/*
+div.reload  {
+  background: rgb(0, 255, 255) url("images/blockquote.png") no-repeat bottom right !important;
+}
+div.form_submit  {
+  background: yellow !important;
+}
+div.generated  {
+  background: orange url("images/blockquote.png") no-repeat bottom right !important;
+}
+div.auto_bookmark  {
+  background: rgb(103, 140, 255) url("images/blockquote.png") no-repeat bottom right !important;
+}
+div.forward_back {
+    background:#001FFF !important;
+}
+*/
+
+div.stacking.panel {
+  /*
+  margin-left: -71px;
+  margin-top: -9px;
+  opacity: .4;
+  margin-right: -85px;
+  width: 106px;
+  position: relative;
+  z-index: -2;*/
+  .head button {
+    display:none;
+  }
+}
+
+.hideme {
+    display:none
 }

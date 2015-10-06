@@ -1,8 +1,279 @@
+@charset "UTF-8";
 /* line 1, main.scss */
 body {
   padding: 20px;
   margin: 10px;
-  background: blue;
+}
+
+/* line 8, main.scss */
+.contextgroup {
+  margin: 0.2em 1.3em 0 0.3em;
+  display: inline;
+}
+/* line 11, main.scss */
+.contextgroup:hover {
+  border-top: 10px solid #E8FFCF;
+}
+
+/* line 16, main.scss */
+.contextgroup.googleblock {
+  margin: 0;
+}
+
+/* line 20, main.scss */
+div.panel {
+  font-size: 16px;
+  width: 100px;
+  display: inline-table;
+}
+/* line 24, main.scss */
+div.panel .content {
+  box-shadow: -5px 8px 14px -6px #868686;
+}
+
+/* line 30, main.scss */
+.notab, .tabbutton {
+  width: 20px;
+  height: 15px;
+  margin-top: 4px;
+}
+
+/* line 36, main.scss */
+.tabbutton {
+  background: #087DB4;
+  width: 50%;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 0;
+}
+
+/* line 44, main.scss */
+.itsatab .head {
+  background: #353535;
+}
+/* line 47, main.scss */
+.itsatab .infocontent,
+.itsatab .infocontent a {
+  background: #353535;
+  color: #FFFFFF;
+}
+
+/* line 55, main.scss */
+.panel.image,
+.panel.image .head,
+.panel.image .infocontent,
+.panel.image p {
+  background: none;
+}
+
+/* line 61, main.scss */
+.panel.image p {
+  color: #FFFFFF;
+  opacity: .7;
+}
+
+/* line 66, main.scss */
+.panel.document,
+.panel.document .head,
+.panel.document .infocontent,
+.panel.document p {
+  background: none;
+  width: 105px !important;
+}
+
+/* line 73, main.scss */
+.panel.document .infocontent {
+  background: url("images/document.png") no-repeat;
+}
+
+/* line 79, main.scss */
+.nocontext .panel.document .content {
+  background: url("images/document.png") no-repeat;
+}
+/* line 82, main.scss */
+.nocontext .panel.document .infocontent {
+  background: none;
+}
+
+/* line 88, main.scss */
+.head {
+  background: #E9E9E9;
+  padding: 4px;
+  height: 16px;
+}
+
+/* line 94, main.scss */
+.infocontent {
+  background: #FFFFFF;
+  height: 104px;
+}
+
+/* line 102, main.scss */
+div.tab {
+  margin-right: 0;
+  border-right: 4px dotted #FFFFFF;
+}
+
+/* Eingetippte Adresse */
+/* line 108, main.scss */
+div.typed {
+  width: 120px;
+}
+/* line 110, main.scss */
+div.typed .infocontent {
+  background: #5A5A5A url("images/blockquote.png") no-repeat bottom right;
+}
+/* line 112, main.scss */
+div.typed .infocontent a {
+  color: #FFFFFF;
+}
+
+/* Extern aufgerufene Adresse */
+/* line 120, main.scss */
+div.auto_toplevel,
+div.keyword {
+  width: 160px;
+}
+
+/* line 124, main.scss */
+div.auto_toplevel .infocontent a,
+div.keyword .infocontent a {
+  color: #000;
+}
+
+/* line 128, main.scss */
+div.auto_toplevel .infocontent {
+  background: #ABCBDA url("images/blockquote.png") no-repeat bottom right;
+}
+
+/* line 131, main.scss */
+div.keyword .infocontent {
+  background: #C0DAAB url("images/blockquote.png") no-repeat bottom right;
+}
+
+/* Google Suchergebnisse */
+/* line 138, main.scss */
+div.google {
+  box-shadow: none;
+  margin: 0 1em 0 .4em;
+  width: 129px;
+}
+/* line 142, main.scss */
+div.google .head {
+  background: none;
+  opacity: 0;
+}
+/* line 146, main.scss */
+div.google .content {
+  background: url("images/searchbubble.png") no-repeat;
+  padding-left: 6px;
+}
+/* line 150, main.scss */
+div.google .infocontent {
+  background: none !important;
+}
+/* line 152, main.scss */
+div.google .infocontent a {
+  color: #505050;
+  font-weight: bold;
+}
+
+/* line 160, main.scss */
+div.mail {
+  box-shadow: none;
+  width: 129px;
+}
+/* line 164, main.scss */
+div.mail .content {
+  box-shadow: none;
+}
+/* line 167, main.scss */
+div.mail .infocontent {
+  background: none;
+  background: #C9B771 url("images/mail-04.png") 6 48 no-repeat;
+}
+
+/* Müllpanel*/
+/* line 175, main.scss */
+div.empty {
+  display: none;
+}
+
+/* line 183, main.scss */
+div.bookmark a {
+  color: #000 !important;
+}
+
+/*Seitenaufrufe */
+/* line 190, main.scss */
+div.panel.rel_big {
+  width: 300px;
+}
+
+/* line 191, main.scss */
+div.panel.rel_some {
+  width: 200px;
+}
+
+/* line 192, main.scss */
+div.panel.rel_twice {
+  width: 150px;
+}
+
+/* Query-Importance */
+/* line 195, main.scss */
+div.lessimportant {
+  background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
+  width: 90px;
+  opacity: .8;
+  font-size: 0.8em;
+  border: 0;
+}
+
+/* line 202, main.scss */
+div.unimportant {
+  background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
+  width: 80px;
+  opacity: .6;
+  font-size: 0.6em;
+  border: 0;
+}
+
+/*
+div.reload  {
+  background: rgb(0, 255, 255) url("images/blockquote.png") no-repeat bottom right !important;
+}
+div.form_submit  {
+  background: yellow !important;
+}
+div.generated  {
+  background: orange url("images/blockquote.png") no-repeat bottom right !important;
+}
+div.auto_bookmark  {
+  background: rgb(103, 140, 255) url("images/blockquote.png") no-repeat bottom right !important;
+}
+div.forward_back {
+    background:#001FFF !important;
+}
+*/
+/* line 231, main.scss */
+div.stacking.panel {
+  /*
+  margin-left: -71px;
+  margin-top: -9px;
+  opacity: .4;
+  margin-right: -85px;
+  width: 106px;
+  position: relative;
+  z-index: -2;*/
+}
+/* line 240, main.scss */
+div.stacking.panel .head button {
+  display: none;
+}
+
+/* line 245, main.scss */
+.hideme {
+  display: none;
 }
 
 /*# sourceMappingURL=main.css.map */
