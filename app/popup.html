@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en" ng-app=popup ng-csp>
   <head>
     <meta charset="utf-8">
     <!-- build:css styles/vendor.css -->
@@ -13,11 +13,25 @@
   <body>
     <h1>Show Me More</h1>
 
+    <div ng-controller="MainController">
+        <h1>Hey! {{welcomeMsg}}</h1>
+        <button class="btn btn-info" ng-click="contribute()">Contribute</button>
+    </div>
+
+
+
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="scripts/app_popup/app.js"></script>
+    <script src="scripts/app_popup/services/storage.js"></script>
+    <script src="scripts/app_popup/controllers/controllers.js"></script>
 
     <!-- build:js scripts/popup.js -->
     <script src="scripts/popup.js"></script>
