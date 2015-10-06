@@ -52,6 +52,10 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
+      compass: {
+        files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
+        tasks: ['compass:server', 'autoprefixer:server']
+      },
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -163,7 +167,8 @@ module.exports = function (grunt) {
       },
       html: [
         '<%= config.app %>/popup.html',
-        '<%= config.app %>/options.html'
+        '<%= config.app %>/options.html',
+        '<%= config.app %>/newTab.html'
       ]
     },
 
@@ -268,12 +273,15 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up build process
     concurrent: {
       chrome: [
+        'compass:server'
       ],
       dist: [
+        'compass:dist',
         'imagemin',
         'svgmin'
       ],
       test: [
+        'compass'
       ]
     },
 
@@ -295,6 +303,61 @@ module.exports = function (grunt) {
       }
     },
 
+    // Compiles Sass to CSS and generates necessary files if requested
+    compass: {
+      options: {
+        sassDir: '<%= config.app %>/styles',
+        cssDir: '<%= config.app %>/styles',
+        // generatedImagesDir: '.tmp/images/generated',
+        // imagesDir: '<%= config.app %>/images',
+        // javascriptsDir: '<%= config.app %>/scripts',
+        // fontsDir: '<%= config.app %>/styles/fonts',
+        // importPath: './bower_components',
+        // httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        // httpFontsPath: '/styles/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      dist: {
+        options: {
+          generatedImagesDir: '<%= config.dist %>/images/generated'
+        }
+      },
+      server: {
+        options: {
+          sourcemap: true
+        }
+      }
+    },
+
+    // Add vendor prefixed styles
+    autoprefixer: {
+      options: {
+        browsers: ['last 1 version']
+      },
+      server: {
+        options: {
+          map: true,
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/styles',
+          src: '{,*/}*.css',
+          dest: '<%= config.app %>/styles'
+        }]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>/styles',
+          src: '{,*/}*.css',
+          dest: '<%= config.app %>/styles'
+        }]
+      }
+    },
+
     // Compress dist files to package
     compress: {
       dist: {
@@ -313,6 +376,8 @@ module.exports = function (grunt) {
       }
     }
   });
+
+
 
   grunt.registerTask('debug', function () {
     grunt.task.run([
