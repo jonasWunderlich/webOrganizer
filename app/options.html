@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app=app_options ng-csp>
   <head>
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
@@ -10,13 +10,23 @@
     <!-- endbuild -->
   </head>
   <body>
-    <h1>'Allo, 'Allo!</h1>
+    <div ng-controller="MainController">
+        <h1>Hey! {{welcomeMsg}}</h1>
+        <button class="btn btn-info" ng-click="contribute()">Contribute</button>
+    </div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="scripts/app_options/app.js"></script>
+    <script src="scripts/app_options/services/storage.js"></script>
+    <script src="scripts/app_options/controllers/controllers.js"></script>
 
     <!-- build:js scripts/options.js -->
     <script src="scripts/options.js"></script>
