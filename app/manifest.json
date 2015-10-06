@@ -46,8 +46,22 @@
   "permissions": [
     "tabs",
     "history",
+    "bookmarks",
     "management",
+    "storage",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "<all_urls>",
+    // "webNavigation",
+    // "contextMenus",
+    //"notification",
+    //"clipboardRead",
+    //"clipboardWrite",
+    "chrome://favicon/"
   ]
+  // "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  // "web_accessible_resources": [
+  //     "http://fonts.googleapis.com/",
+  //     "https://*.google-analytics.com/**/*"
+  // ],
 }
