@@ -1,4 +1,4 @@
 'use strict';
 
-console.log('\'Allo \'Allo! Popup');
+console.log('i am a Popup');
 //# sourceMappingURL=popup.js.map

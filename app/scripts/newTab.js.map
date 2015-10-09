@@ -1,0 +1,1 @@
+{"version":3,"sources":["../scripts.babel/newTab.js"],"names":[],"mappings":"AAAA,YAAY,CAAC;;AAEb,OAAO,CAAC,GAAG,CAAC,gBAAgB,CAAC,CAAC","file":"newTab.js","sourcesContent":["'use strict';\n\nconsole.log('I am a new Tab');\n//# sourceMappingURL=options.js.map\n"]}
