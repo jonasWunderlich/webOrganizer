@@ -8,7 +8,8 @@
     "jquery": "~2.1.4",
     "angular-bootstrap": "~0.13.4",
     "font-awesome": "~4.4.0",
-    "bootstrap-sass": "bootstrap-sass-official#~3.3.5"
+    "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
+    "angular-route": "~1.4.7"
   },
   "devDependencies": {
     "chai": "~3.3.0",
