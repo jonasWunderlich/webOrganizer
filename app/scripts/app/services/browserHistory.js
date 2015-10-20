@@ -25,16 +25,33 @@ angular.module('newTab')
       return deferred.promise;
     };
 
-
     var getStorage = function(variable) {
       var deferred = $q.defer();
       chrome.storage.local.get(variable, function(response) {
-        if (response[variable]) {
-          $log.debug('Storage data retrieved:', response);
-          deferred.resolve(response[variable])
+        if (response) {
+          var storageData = response;
+          if(variable !== undefined) {
+            storageData = response[variable]
+          }
+          $log.debug('Storage data retrieved:', storageData);
+          deferred.resolve(storageData)
         } else {
           $log.debug('Unable to retrieve Storage data', response);
           deferred.reject('unable to retrieve Storage data')
+        }
+      });
+      return deferred.promise;
+    };
+
+    var getStorageBytesInUse = function() {
+      var deferred = $q.defer();
+      chrome.storage.local.getBytesInUse(function(response) {
+        if (response) {
+          $log.debug('Storage Bytes retrieved:', response);
+          deferred.resolve(response)
+        } else {
+          $log.debug('Unable to get Storage Usage', response);
+          deferred.reject('Unable to get Storage Usage')
         }
       });
       return deferred.promise;
@@ -91,6 +108,25 @@ angular.module('newTab')
       return deferredHistory.promise;
     };
 
+    var getOpenTabs = function(windowId) {
+      var deferred = $q.defer();
+      var _config = {};
+      chrome.tabs.query(_config, function(response) {
+        if(response) {
+          var _activeWindow = 'all';
+          if(windowId !== undefined) {
+            _activeWindow = windowId;
+          }
+          $log.debug('opened Tabs in '+_activeWindow+' retrieved:', response);
+          deferred.resolve(response);
+        } else {
+          $log.debug('Unable to retrieve opened Tabs', response);
+          deferred.reject('Unable to retrieve opened Tabs');
+        }
+      });
+      return deferred.promise;
+    };
+
     var processVisit = function(vi) {
       $log.debug(vi.id);
       // TODO: filter unwanted sites / urls
@@ -103,9 +139,11 @@ angular.module('newTab')
     };
 
     return {
-      getHistory: getHistory,
+      getHistoryWithVisits: getHistoryWithVisits,
       getBookmarks: getBookmarks,
-      getHistoryWithVisits: getHistoryWithVisits
+      getStorageBytesInUse: getStorageBytesInUse,
+      getStorage: getStorage,
+      getOpenTabs: getOpenTabs
     };
 
   });

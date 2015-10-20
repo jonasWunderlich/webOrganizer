@@ -6,16 +6,19 @@ body {
 .debug {
   background: yellow;
     position: absolute;
+    padding: 0 20px;
     top: 0;
     left: 0;
-    width: 10px;
+    width: 200px;
     overflow: auto;
+    opacity: .8;
     &:hover {
       width: 70%;
     }
   pre {
     color: red;
     max-height: 200px;
+    overflow: hidden;
     &:hover {
       max-height: inherit;
     }

@@ -14,6 +14,18 @@ angular.module('newTab')
       BrowserHistory.getHistoryWithVisits().then(function(d) {
         $scope.allSites = d;
       });
+     BrowserHistory.getBookmarks().then(function(d) {
+        $scope.bookmarks = d;
+      });
+      BrowserHistory.getStorageBytesInUse().then(function(d) {
+        $scope.storageBytesInUse = d;
+      });
+      BrowserHistory.getStorage().then(function(d) {
+        $scope.storageData = d;
+      });
+      BrowserHistory.getOpenTabs().then(function(d) {
+        $scope.openedTabs = d;
+      });
     };
 
     var _init = function() {

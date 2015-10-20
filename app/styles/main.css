@@ -9,69 +9,72 @@ body {
 .debug {
   background: yellow;
   position: absolute;
+  padding: 0 20px;
   top: 0;
   left: 0;
-  width: 10px;
+  width: 200px;
   overflow: auto;
+  opacity: .8;
 }
-/* line 13, main.scss */
+/* line 15, main.scss */
 .debug:hover {
   width: 70%;
 }
-/* line 16, main.scss */
+/* line 18, main.scss */
 .debug pre {
   color: red;
   max-height: 200px;
+  overflow: hidden;
 }
-/* line 19, main.scss */
+/* line 22, main.scss */
 .debug pre:hover {
   max-height: inherit;
 }
 
-/* line 25, main.scss */
+/* line 28, main.scss */
 ul {
   padding: 0;
 }
 
-/* line 31, main.scss */
+/* line 34, main.scss */
 .contextgroup {
   margin: 0.2em 1.3em 0 0.3em;
   display: inline;
 }
-/* line 34, main.scss */
+/* line 37, main.scss */
 .contextgroup.googleblock {
   margin: 0;
 }
-/* line 37, main.scss */
+/* line 40, main.scss */
 .contextgroup:hover {
   border-top: 10px solid #E8FFCF;
 }
 
-/* line 43, main.scss */
+/* line 46, main.scss */
 .panel {
   font-size: 12px;
   width: 100px;
   display: inline-table;
 }
-/* line 47, main.scss */
+/* line 50, main.scss */
 .panel .head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 52, main.scss */
+/* line 55, main.scss */
 .panel .content {
   box-shadow: -5px 8px 14px -6px #868686;
 }
 
-/* line 58, main.scss */
+/* line 61, main.scss */
 .notab, .tabbutton {
   width: 20px;
   height: 15px;
   margin-top: 4px;
 }
 
-/* line 64, main.scss */
+/* line 67, main.scss */
 .tabbutton {
   background: #087DB4;
   width: 50%;
@@ -79,18 +82,18 @@ ul {
   border-bottom: 0;
 }
 
-/* line 72, main.scss */
+/* line 75, main.scss */
 .itsatab .head {
   background: #353535;
 }
-/* line 75, main.scss */
+/* line 78, main.scss */
 .itsatab .infocontent,
 .itsatab .infocontent a {
   background: #353535;
   color: #FFFFFF;
 }
 
-/* line 83, main.scss */
+/* line 86, main.scss */
 .panel.image,
 .panel.image .head,
 .panel.image .infocontent,
@@ -98,13 +101,13 @@ ul {
   background: none;
 }
 
-/* line 89, main.scss */
+/* line 92, main.scss */
 .panel.image p {
   color: #FFFFFF;
   opacity: .7;
 }
 
-/* line 94, main.scss */
+/* line 97, main.scss */
 .panel.document,
 .panel.document .head,
 .panel.document .infocontent,
@@ -113,140 +116,140 @@ ul {
   width: 105px !important;
 }
 
-/* line 101, main.scss */
+/* line 104, main.scss */
 .panel.document .infocontent {
   background: url("images/document.png") no-repeat;
 }
 
-/* line 107, main.scss */
+/* line 110, main.scss */
 .nocontext .panel.document .content {
   background: url("images/document.png") no-repeat;
 }
-/* line 110, main.scss */
+/* line 113, main.scss */
 .nocontext .panel.document .infocontent {
   background: none;
 }
 
-/* line 118, main.scss */
+/* line 121, main.scss */
 .infocontent {
   background: #FFFFFF;
   height: 104px;
 }
 
-/* line 126, main.scss */
+/* line 129, main.scss */
 div.tab {
   margin-right: 0;
   border-right: 4px dotted #FFFFFF;
 }
 
 /* Eingetippte Adresse */
-/* line 132, main.scss */
+/* line 135, main.scss */
 div.typed {
   width: 120px;
 }
-/* line 134, main.scss */
+/* line 137, main.scss */
 div.typed .infocontent {
   background: #5A5A5A url("images/blockquote.png") no-repeat bottom right;
 }
-/* line 136, main.scss */
+/* line 139, main.scss */
 div.typed .infocontent a {
   color: #FFFFFF;
 }
 
 /* Extern aufgerufene Adresse */
-/* line 144, main.scss */
+/* line 147, main.scss */
 div.auto_toplevel,
 div.keyword {
   width: 160px;
 }
 
-/* line 148, main.scss */
+/* line 151, main.scss */
 div.auto_toplevel .infocontent a,
 div.keyword .infocontent a {
   color: #000;
 }
 
-/* line 152, main.scss */
+/* line 155, main.scss */
 div.auto_toplevel .infocontent {
   background: #ABCBDA url("images/blockquote.png") no-repeat bottom right;
 }
 
-/* line 155, main.scss */
+/* line 158, main.scss */
 div.keyword .infocontent {
   background: #C0DAAB url("images/blockquote.png") no-repeat bottom right;
 }
 
 /* Google Suchergebnisse */
-/* line 162, main.scss */
+/* line 165, main.scss */
 div.google {
   box-shadow: none;
   margin: 0 1em 0 .4em;
   width: 129px;
 }
-/* line 166, main.scss */
+/* line 169, main.scss */
 div.google .head {
   background: none;
   opacity: 0;
 }
-/* line 170, main.scss */
+/* line 173, main.scss */
 div.google .content {
   background: url("images/searchbubble.png") no-repeat;
   padding-left: 6px;
 }
-/* line 174, main.scss */
+/* line 177, main.scss */
 div.google .infocontent {
   background: none !important;
 }
-/* line 176, main.scss */
+/* line 179, main.scss */
 div.google .infocontent a {
   color: #505050;
   font-weight: bold;
 }
 
-/* line 184, main.scss */
+/* line 187, main.scss */
 div.mail {
   box-shadow: none;
   width: 129px;
 }
-/* line 188, main.scss */
+/* line 191, main.scss */
 div.mail .content {
   box-shadow: none;
 }
-/* line 191, main.scss */
+/* line 194, main.scss */
 div.mail .infocontent {
   background: none;
   background: #C9B771 url("images/mail-04.png") 6 48 no-repeat;
 }
 
 /* Müllpanel*/
-/* line 199, main.scss */
+/* line 202, main.scss */
 div.empty {
   display: none;
 }
 
-/* line 207, main.scss */
+/* line 210, main.scss */
 div.bookmark a {
   color: #000 !important;
 }
 
 /*Seitenaufrufe */
-/* line 214, main.scss */
+/* line 217, main.scss */
 div.panel.rel_big {
   width: 300px;
 }
 
-/* line 215, main.scss */
+/* line 218, main.scss */
 div.panel.rel_some {
   width: 200px;
 }
 
-/* line 216, main.scss */
+/* line 219, main.scss */
 div.panel.rel_twice {
   width: 150px;
 }
 
 /* Query-Importance */
-/* line 219, main.scss */
+/* line 222, main.scss */
 div.lessimportant {
   background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
   width: 90px;
@@ -255,7 +258,7 @@ div.lessimportant {
   border: 0;
 }
 
-/* line 226, main.scss */
+/* line 229, main.scss */
 div.unimportant {
   background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
   width: 80px;
@@ -281,7 +284,7 @@ div.forward_back {
     background:#001FFF !important;
 }
 */
-/* line 255, main.scss */
+/* line 258, main.scss */
 div.stacking.panel {
   /*
   margin-left: -71px;
@@ -292,7 +295,7 @@ div.stacking.panel {
   position: relative;
   z-index: -2;*/
 }
-/* line 264, main.scss */
+/* line 267, main.scss */
 div.stacking.panel .head button {
   display: none;
 }

@@ -17,8 +17,22 @@
 <div id="historycontent" ng-controller="MainController">
 
     <div class="debug">
+      <h3>histore</h3>
         <pre>
             {{allSites | json}}
+        </pre>
+        <h3>bookmarks</h3>
+        <pre>
+            {{bookmarks | json}}
+        </pre>
+        <h3>storage</h3>
+        <pre>
+            {{storageBytesInUse}} Bytes / 5MB // {{storageBytesInUse / 5242880 * 100}}%
+            {{storageData | json}}
+        </pre>
+        <h3>tabs</h3>
+        <pre>
+            {{openedTabs|json}}
         </pre>
     </div>
 
@@ -61,6 +75,8 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

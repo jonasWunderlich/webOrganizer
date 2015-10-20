@@ -3,7 +3,8 @@
 // Declare app level module which depends on filters, and services
 angular
   .module('newTab', [
-  'ngRoute',
+    'ngRoute',
+    'ui.bootstrap'
   ])
   .config(function(configurationProvider) {
     configurationProvider.setDayRange(0, 30);
