@@ -1,11 +1,25 @@
-angular.module('newTab')
-  .controller('MainController', ['$scope', function($scope) {
-      $scope.welcomeMsg = "This is your first chrome extension";
+'use strict';
 
-      $scope.contribute = function() {
-        chrome.tabs.create({
-          url: 'https://github.com/flrent/chrome-extension-angular-base'
-        })
-      }
-  }])
-;
+/**
+ * @ngdoc function
+ * @name app.controller:MainController
+ * @description
+ * # MainCtrl
+ * Controller of the app
+ */
+angular.module('newTab')
+  .controller('MainController', function ($scope, $log, BrowserHistory) {
+
+    var getData = function() {
+      BrowserHistory.getHistoryWithVisits().then(function(d) {
+        $scope.allSites = d;
+      });
+    };
+
+    var _init = function() {
+      getData();
+    };
+
+    _init();
+
+  });

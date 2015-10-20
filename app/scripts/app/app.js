@@ -9,4 +9,6 @@ angular
     configurationProvider.setDayRange(0, 30);
     configurationProvider.minPages(1);
     configurationProvider.maxPages(1);
+    configurationProvider.maxResults(20);
+    configurationProvider.maxVisits(5);
   });

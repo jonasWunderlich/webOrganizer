@@ -1,26 +1,54 @@
 body {
-  padding: 20px;
-  margin: 10px;
+  padding: 10px;
+  margin: 0;
 }
 
+.debug {
+  background: yellow;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    overflow: auto;
+    &:hover {
+      width: 70%;
+    }
+  pre {
+    color: red;
+    max-height: 200px;
+    &:hover {
+      max-height: inherit;
+    }
+  }
+}
 
+ul {
+  padding: 0;
+  li{
+  }
+}
 
 .contextgroup {
   margin: 0.2em 1.3em 0 0.3em;
   display:inline;
+  &.googleblock {
+    margin: 0;
+  }
   &:hover {
     border-top: 10px solid #E8FFCF;
   }
 }
 
-.contextgroup.googleblock {
-  margin: 0;
-}
 
-div.panel  {
-  font-size: 16px;
+.panel  {
+  font-size: 12px;
   width: 100px;
   display: inline-table;
+  .head {
+    background: #E9E9E9;
+    padding: 4px;
+    height: 16px;
+  }
   .content {
     box-shadow: -5px 8px 14px -6px #868686;
   }
@@ -85,11 +113,7 @@ div.panel  {
   }
 }
 
-.head {
-  background: #E9E9E9;
-  padding: 4px;
-  height: 16px;
-}
+
 
 .infocontent {
   background: #FFFFFF;
@@ -240,8 +264,4 @@ div.stacking.panel {
   .head button {
     display:none;
   }
-}
-
-.hideme {
-    display:none
 }

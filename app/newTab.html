@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app=newTab ng-csp>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
@@ -9,32 +10,68 @@
     <!-- build:css styles/main.css -->
     <link href="styles/main.css" rel="stylesheet">
     <!-- endbuild -->
-  </head>
-  <body>
-    <h1>New Tab</h1>
+</head>
 
-    <div ng-controller="MainController">
-        <h1>Hey! {{welcomeMsg}}</h1>
-        <button class="btn btn-info" ng-click="contribute()">Contribute</button>
+<body>
+
+<div id="historycontent" ng-controller="MainController">
+
+    <div class="debug">
+        <pre>
+            {{allSites | json}}
+        </pre>
     </div>
 
+    <div id="configbar">
+        <div id="simple-slider" class="conf dragdealer rounded-cornered">
+            <div id="handle_amount" class="red-bar handle">drag me</div>
+        </div>
+        <button id="hidegoogle">nosearch</button>
+        <div id="searchfield"><input type="text" id="search" class="rounded-cornered" placeholder="Suche"></div>
+        <div class="clear"></div>
+    </div>
+    <div>
+        <ul>
+            <li ng-repeat="site in allSites" class="panel">
+                <div class="head">
+                  <div class="favicon">fav</div>
+                  <div class="contexts"></div>
+                </div>
+                <a href="{{site.url}}">
+                    <div class="content">
+                        <div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>
+                        <div>{{site.title}}</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+<div id="sidebar">
+    <div id="bookmarklist"></div>
+    <div class="clear"></div>
+</div>
 
-    <script src="scripts/app/app.js"></script>
-    <script src="scripts/app/services/storage.js"></script>
-    <script src="scripts/app/controllers/controllers.js"></script>
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-    <!-- build:js scripts/newTab.js -->
-    <script src="scripts/newTab.js"></script>
-    <!-- endbuild -->
-  </body>
+<script src="scripts/app/app.js"></script>
+<script src="scripts/app/services/configuration.js"></script>
+<script src="scripts/app/services/storage.js"></script>
+<script src="scripts/app/services/browserHistory.js"></script>
+<script src="scripts/app/controllers/controllers.js"></script>
+
+<!-- build:js scripts/newTab.js -->
+<script src="scripts/newTab.js"></script>
+<!-- endbuild -->
+</body>
 </html>

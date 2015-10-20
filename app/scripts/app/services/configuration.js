@@ -17,13 +17,19 @@ angular.module('newTab')
       this.dayRange = range;
       this.endTime = _date - (_milSecPerDay * (day));
       this.startTime = _date - (_milSecPerDay * (range + day));
-    }
+    };
     this.minPages = function(v) {
       this.minPages = v;
-    }
+    };
     this.maxPages = function(v) {
       this.maxPages = v;
-    }
+    };
+    this.maxResults = function(v) {
+      this.maxResults = v;
+    };
+    this.maxVisits = function(v) {
+      this.maxVisits = v;
+    };
 
     this.$get = function() {
       var self = this;
@@ -33,8 +39,11 @@ angular.module('newTab')
             'text': '',
             'startTime': self.startTime,
             'endTime': self.endTime,
-            'maxResults': 10
+            'maxResults': self.maxResults
           };
+        },
+        getMaxVisits: function() {
+          return self.maxVisits;
         }
       }
     }
