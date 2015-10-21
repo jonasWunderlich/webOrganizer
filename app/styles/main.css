@@ -63,31 +63,41 @@ a {
   background: rgba(255, 255, 255, 0.77);
   box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
 }
-/* line 59, main.scss */
+/* line 62, main.scss */
 .panel.visits-1 {
   width: 110px;
 }
-/* line 62, main.scss */
+/* line 65, main.scss */
 .panel.visits-2 {
   width: 120px;
 }
-/* line 65, main.scss */
+/* line 68, main.scss */
 .panel.visits-3 {
   width: 200px;
 }
-/* line 68, main.scss */
+/* line 71, main.scss */
 .panel:hover {
   background: #FFF;
   opacity: 1;
   cursor: pointer;
 }
-/* line 73, main.scss */
+/* line 76, main.scss */
 .panel .head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 78, main.scss */
+/* line 81, main.scss */
+.panel.bookmark .head {
+  background: #353535;
+  opacity: 0.7;
+}
+/* line 85, main.scss */
+.panel.tab .head {
+  background: yellow;
+  opacity: 1;
+}
+/* line 89, main.scss */
 .panel .content {
   color: #000;
   min-height: 70px;

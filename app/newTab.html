@@ -38,7 +38,7 @@
     </div>
     <div id="panel-content">
         <ul>
-            <li ng-repeat="site in allSites" class="panel" ng-class="getPanelClasses(site)">
+            <li ng-repeat="site in allSites" class="panel" ng-class="getPanelClasses(site)" style="{{getContextColor(site)}}">
                 <div class="head">
                   <div class="favicon"><img ng-src="{{'chrome://favicon/'+site.url}}"></div>
                   <div class="contexts"></div>

@@ -17,7 +17,7 @@ angular.module('newTab')
      * @description Write all the Data in the scope
      */
     var getData = function() {
-      BrowserHistory.getHistoryWithVisits().then(function(d) {
+      BrowserHistory.getProcessedHistory().then(function(d) {
         $scope.allSites = d;
       });
       BrowserHistory.getBookmarks().then(function(d) {
@@ -42,7 +42,10 @@ angular.module('newTab')
     };
 
     $scope.getPanelClasses = function(site) {
-      var _visited;
+      var _visited, _bookmark, _tab;
+
+      _bookmark = (site.bookmark) ? 'bookmark' : '';
+      _tab = (site.tabOpen) ? 'tab' : '';
 
       switch (site.visitCount > 1) {
         case (site.visitCount < 5):
@@ -54,8 +57,13 @@ angular.module('newTab')
         case (site.visitCount >= 10):
           _visited = 'visits-3';
           break;
-        }
-      return _visited;
+      }
+      return _visited + ' ' + _bookmark + ' ' + _tab;
+    };
+
+    $scope.getContextColor = function(site) {
+      if(site.context)
+        return 'background:'+$scope.storedContexts[site.context]['color']+'';
     };
 
     /**

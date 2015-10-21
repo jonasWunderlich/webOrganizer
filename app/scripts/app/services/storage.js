@@ -10,7 +10,6 @@
 angular.module('newTab')
   .service('Storage', function ($log, $http, $q, configuration, ChromeApi) {
 
-
     /**
      * @ngdoc method
      * @name getStoredContexts
@@ -50,7 +49,6 @@ angular.module('newTab')
       chrome.storage.local.set({'contextOptions': _contextOptions}, function() {});
     };
 
-
     /**
      * @ngdoc method
      * @name setupContextOptions
@@ -64,7 +62,6 @@ angular.module('newTab')
       var result = {};
       _.each(bookmarkFolder, function(item) {
         var entry = _.omit(item, 'id', 'dateGroupModified', 'dateAdded', 'children');
-        //entry.color = '#FFF';
         entry.color = randomColor();
         result[item.id] = entry;
         // TODO: Maybe its better to filter empty objects before the recursion

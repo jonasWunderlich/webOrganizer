@@ -56,6 +56,9 @@ a {
   margin: 2px;
   background: rgba(255, 255, 255, 0.77);
   box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
+//  Playground for background-image out of favicon
+//  background-size: 300px 300px;
+//  background-repeat: no-repeat;
   &.visits-1 {
     width: 110px;
   }
@@ -74,6 +77,14 @@ a {
     background: #E9E9E9;
     padding: 4px;
     height: 16px;
+  }
+  &.bookmark .head {
+    background: #353535;
+    opacity: 0.7;
+  }
+  &.tab .head {
+    background: yellow;
+    opacity: 1;
   }
   .content {
     color: #000;
