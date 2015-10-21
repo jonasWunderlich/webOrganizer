@@ -40,7 +40,7 @@
         <ul>
             <li ng-repeat="site in allSites" class="panel">
                 <div class="head">
-                  <div class="favicon">fav</div>
+                  <div class="favicon"><img src="{{'chrome://favicon/'+site.url}}"></div>
                   <div class="contexts"></div>
                 </div>
                 <a href="{{site.url}}">
