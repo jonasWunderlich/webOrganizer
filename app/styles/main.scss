@@ -56,6 +56,15 @@ a {
   margin: 2px;
   background: rgba(255, 255, 255, 0.77);
   box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
+  &.visits-1 {
+    width: 110px;
+  }
+  &.visits-2 {
+    width: 120px;
+  }
+  &.visits-3 {
+    width: 200px;
+  }
   &:hover {
     background: #FFF;
     opacity: 1;

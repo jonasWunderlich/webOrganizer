@@ -41,6 +41,23 @@ angular.module('newTab')
       });
     };
 
+    $scope.getPanelClasses = function(site) {
+      var _visited;
+
+      switch (site.visitCount > 1) {
+        case (site.visitCount < 5):
+          _visited = 'visits-1';
+          break;
+        case (site.visitCount >= 5 && site.visitCount < 10):
+          _visited = 'visits-2';
+          break;
+        case (site.visitCount >= 10):
+          _visited = 'visits-3';
+          break;
+        }
+      return _visited;
+    };
+
     /**
      * @ngdoc method
      * @name _init

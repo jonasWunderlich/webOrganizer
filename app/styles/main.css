@@ -64,18 +64,30 @@ a {
   box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
 }
 /* line 59, main.scss */
+.panel.visits-1 {
+  width: 110px;
+}
+/* line 62, main.scss */
+.panel.visits-2 {
+  width: 120px;
+}
+/* line 65, main.scss */
+.panel.visits-3 {
+  width: 200px;
+}
+/* line 68, main.scss */
 .panel:hover {
   background: #FFF;
   opacity: 1;
   cursor: pointer;
 }
-/* line 64, main.scss */
+/* line 73, main.scss */
 .panel .head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 69, main.scss */
+/* line 78, main.scss */
 .panel .content {
   color: #000;
   min-height: 70px;
