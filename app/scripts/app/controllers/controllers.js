@@ -8,7 +8,7 @@
  * Controller of the app
  */
 angular.module('newTab')
-  .controller('MainController', function ($scope, $log, BrowserHistory) {
+  .controller('MainController', function ($scope, $log, BrowserHistory, Storage) {
 
     var getData = function() {
       BrowserHistory.getHistoryWithVisits().then(function(d) {
@@ -17,14 +17,20 @@ angular.module('newTab')
      BrowserHistory.getBookmarks().then(function(d) {
         $scope.bookmarks = d;
       });
-      BrowserHistory.getStorageBytesInUse().then(function(d) {
-        $scope.storageBytesInUse = d;
-      });
-      BrowserHistory.getStorage().then(function(d) {
-        $scope.storageData = d;
-      });
       BrowserHistory.getOpenTabs().then(function(d) {
         $scope.openedTabs = d;
+      });
+      Storage.getStorageBytesInUse().then(function(d) {
+        $scope.storageBytesInUse = d;
+      });
+      Storage.getStorage().then(function(d) {
+        $scope.storageData = d;
+      });
+      // Storage.getStoredConfiguration().then(function(d) {
+      //   $scope.storedConfiguration;
+      // });
+      Storage.getStoredContexts().then(function(d) {
+        $scope.storedContexts;
       });
     };
 

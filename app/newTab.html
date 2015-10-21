@@ -17,34 +17,26 @@
 <div id="historycontent" ng-controller="MainController">
 
     <div class="debug">
-      <h3>histore</h3>
-        <pre>
-            {{allSites | json}}
-        </pre>
-        <h3>bookmarks</h3>
-        <pre>
-            {{bookmarks | json}}
-        </pre>
-        <h3>storage</h3>
-        <pre>
-            {{storageBytesInUse}} Bytes / 5MB // {{storageBytesInUse / 5242880 * 100}}%
-            {{storageData | json}}
-        </pre>
-        <h3>tabs</h3>
-        <pre>
-            {{openedTabs|json}}
-        </pre>
+      <h3>History</h3>
+        <pre>{{allSites | json}}</pre>
+        <h3>Bookmarks</h3>
+        <pre>{{bookmarks | json}}</pre>
+        <h3>Storage</h3>
+        {{storageBytesInUse}} Bytes / 5MB // {{storageBytesInUse / 5242880 * 100}}%
+        <pre>{{storageData | json}}</pre>
+        <h3>Tabs</h3>
+        <pre>{{openedTabs|json}}</pre>
     </div>
 
-    <div id="configbar">
+    <div id="config-bar">
         <div id="simple-slider" class="conf dragdealer rounded-cornered">
             <div id="handle_amount" class="red-bar handle">drag me</div>
         </div>
-        <button id="hidegoogle">nosearch</button>
-        <div id="searchfield"><input type="text" id="search" class="rounded-cornered" placeholder="Suche"></div>
+        <button id="hide-google">nosearch</button>
+        <div id="search-field"><input type="text" id="search" class="rounded-cornered" placeholder="Suche"></div>
         <div class="clear"></div>
     </div>
-    <div>
+    <div id="panel-content">
         <ul>
             <li ng-repeat="site in allSites" class="panel">
                 <div class="head">
@@ -54,7 +46,7 @@
                 <a href="{{site.url}}">
                     <div class="content">
                         <div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>
-                        <div>{{site.title}}</div>
+                        <div>{{site.title | limitTo:30}}</div>
                     </div>
                 </a>
             </li>
@@ -82,6 +74,7 @@
 
 <script src="scripts/app/app.js"></script>
 <script src="scripts/app/services/configuration.js"></script>
+<script src="scripts/app/services/chromeApi.js"></script>
 <script src="scripts/app/services/storage.js"></script>
 <script src="scripts/app/services/browserHistory.js"></script>
 <script src="scripts/app/controllers/controllers.js"></script>

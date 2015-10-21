@@ -1,80 +1,109 @@
 @charset "UTF-8";
 /* line 1, main.scss */
 body {
+  background: #1B746E;
   padding: 10px;
   margin: 0;
 }
 
-/* line 6, main.scss */
+/* line 7, main.scss */
+ul {
+  padding: 0;
+}
+
+/* line 13, main.scss */
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* line 17, main.scss */
 .debug {
   background: yellow;
   position: absolute;
-  padding: 0 20px;
+  padding: 0 10px 0 20px;
   top: 0;
   left: 0;
   width: 200px;
   overflow: auto;
   opacity: .8;
 }
-/* line 15, main.scss */
+/* line 26, main.scss */
 .debug:hover {
   width: 70%;
 }
-/* line 18, main.scss */
+/* line 31, main.scss */
 .debug pre {
-  color: red;
+  color: #0048FF;
   max-height: 200px;
   overflow: hidden;
 }
-/* line 22, main.scss */
+/* line 35, main.scss */
 .debug pre:hover {
   max-height: inherit;
 }
 
-/* line 28, main.scss */
-ul {
-  padding: 0;
-}
-
-/* line 34, main.scss */
-.contextgroup {
-  margin: 0.2em 1.3em 0 0.3em;
-  display: inline;
-}
-/* line 37, main.scss */
-.contextgroup.googleblock {
-  margin: 0;
-}
-/* line 40, main.scss */
-.contextgroup:hover {
-  border-top: 10px solid #E8FFCF;
+/* line 42, main.scss */
+#panel-content {
+  margin-left: 240px;
 }
 
 /* line 46, main.scss */
+#config-bar {
+  margin-left: 240px;
+  display: none;
+}
+
+/* line 52, main.scss */
 .panel {
   font-size: 12px;
   width: 100px;
   display: inline-table;
+  margin: 2px;
+  background: rgba(255, 255, 255, 0.77);
+  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
 }
-/* line 50, main.scss */
+/* line 59, main.scss */
+.panel:hover {
+  background: #FFF;
+  opacity: 1;
+  cursor: pointer;
+}
+/* line 64, main.scss */
 .panel .head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 55, main.scss */
+/* line 69, main.scss */
 .panel .content {
-  box-shadow: -5px 8px 14px -6px #868686;
+  color: #000;
+  min-height: 70px;
+  padding: 2px;
 }
 
-/* line 61, main.scss */
+/*
+.contextgroup {
+  margin: 0.2em 1.3em 0 0.3em;
+  display:inline;
+  &.googleblock {
+    margin: 0;
+  }
+  &:hover {
+    border-top: 10px solid #E8FFCF;
+  }
+}
+
+
+
+
+
 .notab, .tabbutton {
   width: 20px;
   height: 15px;
   margin-top: 4px;
 }
 
-/* line 67, main.scss */
 .tabbutton {
   background: #087DB4;
   width: 50%;
@@ -82,192 +111,171 @@ ul {
   border-bottom: 0;
 }
 
-/* line 75, main.scss */
-.itsatab .head {
-  background: #353535;
-}
-/* line 78, main.scss */
-.itsatab .infocontent,
-.itsatab .infocontent a {
-  background: #353535;
-  color: #FFFFFF;
+.itsatab {
+  .head {
+    background: #353535;
+  }
+  .infocontent,
+  .infocontent a {
+    background: #353535;
+    color: #FFFFFF;
+  }
 }
 
-/* line 86, main.scss */
+
 .panel.image,
 .panel.image .head,
 .panel.image .infocontent,
 .panel.image p {
   background: none;
 }
-
-/* line 92, main.scss */
 .panel.image p {
   color: #FFFFFF;
   opacity: .7;
 }
 
-/* line 97, main.scss */
 .panel.document,
 .panel.document .head,
 .panel.document .infocontent,
-.panel.document p {
-  background: none;
+.panel.document p{
+  background:none;
   width: 105px !important;
 }
-
-/* line 104, main.scss */
 .panel.document .infocontent {
   background: url("images/document.png") no-repeat;
 }
 
-/* line 110, main.scss */
-.nocontext .panel.document .content {
-  background: url("images/document.png") no-repeat;
-}
-/* line 113, main.scss */
-.nocontext .panel.document .infocontent {
-  background: none;
+.nocontext {
+  .panel.document {
+    .content {
+      background: url("images/document.png") no-repeat;
+    }
+    .infocontent {
+      background: none;
+    }
+  }
 }
 
-/* line 121, main.scss */
+
+
 .infocontent {
   background: #FFFFFF;
   height: 104px;
 }
 
-/* line 129, main.scss */
+
+div.link.refzero  {
+}
 div.tab {
-  margin-right: 0;
-  border-right: 4px dotted #FFFFFF;
+  margin-right:0;
+  border-right:4px dotted #FFFFFF;
 }
 
-/* Eingetippte Adresse */
-/* line 135, main.scss */
-div.typed {
-  width: 120px;
-}
-/* line 137, main.scss */
-div.typed .infocontent {
-  background: #5A5A5A url("images/blockquote.png") no-repeat bottom right;
-}
-/* line 139, main.scss */
-div.typed .infocontent a {
-  color: #FFFFFF;
+//Eingetippte Adresse
+div.typed  {
+  width:120px;
+  .infocontent {
+    background: #5A5A5A url("images/blockquote.png") no-repeat bottom right;
+    a {
+      color: #FFFFFF;
+    }
+  }
 }
 
-/* Extern aufgerufene Adresse */
-/* line 147, main.scss */
+
+//Extern aufgerufene Adresse
 div.auto_toplevel,
 div.keyword {
-  width: 160px;
+    width: 160px;
 }
-
-/* line 151, main.scss */
 div.auto_toplevel .infocontent a,
 div.keyword .infocontent a {
-  color: #000;
+    color:  #000;
 }
-
-/* line 155, main.scss */
 div.auto_toplevel .infocontent {
-  background: #ABCBDA url("images/blockquote.png") no-repeat bottom right;
+    background: #ABCBDA url("images/blockquote.png") no-repeat bottom right;
 }
-
-/* line 158, main.scss */
 div.keyword .infocontent {
-  background: #C0DAAB url("images/blockquote.png") no-repeat bottom right;
+    background: #C0DAAB url("images/blockquote.png") no-repeat bottom right;
 }
 
-/* Google Suchergebnisse */
-/* line 165, main.scss */
+
+
+//Google Suchergebnisse
 div.google {
-  box-shadow: none;
+  box-shadow:none;
   margin: 0 1em 0 .4em;
-  width: 129px;
-}
-/* line 169, main.scss */
-div.google .head {
-  background: none;
-  opacity: 0;
-}
-/* line 173, main.scss */
-div.google .content {
-  background: url("images/searchbubble.png") no-repeat;
-  padding-left: 6px;
-}
-/* line 177, main.scss */
-div.google .infocontent {
-  background: none !important;
-}
-/* line 179, main.scss */
-div.google .infocontent a {
-  color: #505050;
-  font-weight: bold;
+  width:129px;
+  .head {
+    background: none;
+    opacity: 0;
+  }
+  .content {
+    background: url("images/searchbubble.png") no-repeat;
+    padding-left: 6px;
+  }
+  .infocontent {
+    background:none !important;
+    a {
+      color:#505050;
+      font-weight:bold;
+    }
+  }
 }
 
-/* line 187, main.scss */
+
 div.mail {
-  box-shadow: none;
-  width: 129px;
-}
-/* line 191, main.scss */
-div.mail .content {
-  box-shadow: none;
-}
-/* line 194, main.scss */
-div.mail .infocontent {
-  background: none;
-  background: #C9B771 url("images/mail-04.png") 6 48 no-repeat;
-}
-
-/* Müllpanel*/
-/* line 202, main.scss */
-div.empty {
-  display: none;
+  box-shadow:none;
+  width:129px;
+  .head {}
+  .content {
+    box-shadow: none;
+  }
+  .infocontent {
+    background: none;
+    background: #C9B771 url("images/mail-04.png") 6 48 no-repeat;
+  }
 }
 
-/* line 210, main.scss */
-div.bookmark a {
-  color: #000 !important;
+
+//Müllpanel
+div.empty  {
+  display:none;
 }
 
-/*Seitenaufrufe */
-/* line 217, main.scss */
-div.panel.rel_big {
-  width: 300px;
+
+
+
+div.bookmark {
+  a {
+    color: #000 !important;
+  }
 }
 
-/* line 218, main.scss */
-div.panel.rel_some {
-  width: 200px;
-}
 
-/* line 219, main.scss */
-div.panel.rel_twice {
-  width: 150px;
-}
+//Seitenaufrufe
+div.panel.rel_big {   width:300px;}
+div.panel.rel_some {  width:200px;}
+div.panel.rel_twice { width:150px;}
 
-/* Query-Importance */
-/* line 222, main.scss */
-div.lessimportant {
+//Query-Importance
+div.lessimportant  {
   background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
-  width: 90px;
+  width:90px;
   opacity: .8;
   font-size: 0.8em;
-  border: 0;
+  border:0;
 }
-
-/* line 229, main.scss */
-div.unimportant {
+div.unimportant  {
   background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
-  width: 80px;
+  width:80px;
   opacity: .6;
   font-size: 0.6em;
-  border: 0;
+  border:0;
 }
 
-/*
+
+
 div.reload  {
   background: rgb(0, 255, 255) url("images/blockquote.png") no-repeat bottom right !important;
 }
@@ -283,21 +291,22 @@ div.auto_bookmark  {
 div.forward_back {
     background:#001FFF !important;
 }
-*/
-/* line 258, main.scss */
+
+
+
 div.stacking.panel {
-  /*
   margin-left: -71px;
   margin-top: -9px;
   opacity: .4;
   margin-right: -85px;
   width: 106px;
   position: relative;
-  z-index: -2;*/
+  z-index: -2;
+  .head button {
+    display:none;
+  }
 }
-/* line 267, main.scss */
-div.stacking.panel .head button {
-  display: none;
-}
+
+*/
 
 /*# sourceMappingURL=main.css.map */
