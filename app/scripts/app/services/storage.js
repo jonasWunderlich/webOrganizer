@@ -4,42 +4,27 @@
  * @ngdoc service
  * @name newTab.Storage
  * @description
- * # Storage
  * Service for getting the Browser Storage
  */
+
 angular.module('newTab')
   .service('Storage', function ($log, $http, $q, configuration, ChromeApi) {
 
 
-
-    var getStoredConfiguration = function() {
-      var deferred = $q.defer();
-      ChromeApi.getStorage('configuration')
-        .then(function(response) {
-          if(response) {
-            $log.debug('stored Configuration found', response);
-            return response;
-          } else {
-            $log.debug('no stored Configuration found trying to build');
-            var configObject = {
-              'version': 0.01
-            }
-            chrome.storage.local.set({'configuration':configObject}, function(response) {
-
-            });
-          }
-        });
-      return deferred.promise;
-    }
-
-
-
+    /**
+     * @ngdoc method
+     * @name getStoredContexts
+     * @methodOf newTab.Storage
+     * @description Checks if Context-Configuration already exists in the Storage - If not creates it
+     * @returns {promise}
+     */
     var getStoredContexts = function() {
       var deferred = $q.defer();
       ChromeApi.getBookmarks()
         .then(function(bookmarks) {
           ChromeApi.getStorage('contextOptions').then(function(contextOptions) {
               $log.debug('Context Options found', contextOptions);
+              //TODO: For now Options are rewritten with every reload for Setting up the correct settings
               writeContextOptions(bookmarks);
               deferred.resolve(contextOptions);
             }, function(error) {
@@ -51,25 +36,34 @@ angular.module('newTab')
       return deferred.promise;
     };
 
-
+    /**
+     * @ngdoc method
+     * @name writeContextOptions
+     * @methodOf newTab.Storage
+     * @description
+     * @param bookmarks
+     */
     var writeContextOptions = function(bookmarks) {
-
+      //TODO: Maybe this can be put into the getStoredContext-method later
       var _contextOptions = setupContextOptions(bookmarks);
-      chrome.storage.local.set({'contextOptions': _contextOptions},
-        function(response) {
-          return null;
-      });
+      //TODO: This needs to be put as a function to the ChromeApi that returns a promise
+      chrome.storage.local.set({'contextOptions': _contextOptions}, function() {});
     };
 
 
-
+    /**
+     * @ngdoc method
+     * @name setupContextOptions
+     * @methodOf newTab.Storage
+     * @description Recursive Function for writing Context Configuration Data in the Storage
+     * @param data
+     * @returns {{}}
+     */
     var setupContextOptions = function(data) {
-
       var bookmarkFolder = _.filter(data, 'children');
       var result = {};
-
       _.each(bookmarkFolder, function(item) {
-        var entry = _.omit(item, 'id', 'dateGroupModified', 'dateAdded', 'children')
+        var entry = _.omit(item, 'id', 'dateGroupModified', 'dateAdded', 'children');
         entry.color = '#FFF';
         result[item.id] = entry;
         // TODO: Maybe its better to filter empty objects before the recursion
@@ -79,12 +73,10 @@ angular.module('newTab')
     };
 
 
-
-
     return {
       getStorageBytesInUse: ChromeApi.getStorageBytesInUse,
       getStorage: ChromeApi.getStorage,
-      getStoredConfiguration: getStoredConfiguration,
+      getStoredConfiguration: ChromeApi.getStoredConfiguration,
       getStoredContexts: getStoredContexts
     };
 

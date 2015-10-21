@@ -4,12 +4,19 @@
  * @ngdoc service
  * @name newTab.browserHistory
  * @description
- * # browserHistory
  * Service for getting the Browser History
  */
+
 angular.module('newTab')
   .factory('BrowserHistory', function ($log, $http, $q, configuration, ChromeApi) {
 
+    /**
+     * @ngdoc method
+     * @name getHistoryWithVisits
+     * @methodOf newTab.browserHistory
+     * @description Fetches the BrowserHistory and then adds extra Data of the Visits
+     * @returns {promise}
+     */
     var getHistoryWithVisits = function() {
       var deferredHistory = $q.defer();
       ChromeApi.getStorage('tabConnections')
@@ -31,6 +38,14 @@ angular.module('newTab')
       return deferredHistory.promise;
     };
 
+    /**
+     * @ngdoc method
+     * @name processVisit
+     * @methodOf newTab.browserHistory
+     * @description Connect the Data
+     * @returns {promise}
+     * @param vi
+     */
     var processVisit = function(vi) {
       //$log.debug(vi.id);
       // TODO: filter unwanted sites / urls

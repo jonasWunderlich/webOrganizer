@@ -2,17 +2,20 @@
 
 /**
  * @ngdoc service
- * @name newTab.Storage
- * @description
- * # Storage
- * Service for getting the Browser Storage
+ * @name newTab.ChromeApi
+ * @description get
+ * Service for communication with the Browser-API
  */
+
 angular.module('newTab')
   .service('ChromeApi', function ($log, $http, $q, configuration) {
 
     /**
-     * [getBookmarks description]
-     * @return {[type]} [description]
+     * @ngdoc method
+     * @name getBookmarks
+     * @methodOf newTab.ChromeApi
+     * @description get all Browser-Bookmarks in its Tree-Structure
+     * @returns {promise}
      */
     var getBookmarks = function() {
       var deferred = $q.defer();
@@ -28,6 +31,14 @@ angular.module('newTab')
       return deferred.promise;
     };
 
+    /**
+     * @ngdoc method
+     * @name getOpenTabs
+     * @methodOf newTab.ChromeApi
+     * @description get active Tabs ether of a specific Window all by setting no ID all Tabs
+     * @param windowId
+     * @returns {promise}
+     */
     var getOpenTabs = function(windowId) {
       var deferred = $q.defer();
       var _config = {};
@@ -47,6 +58,13 @@ angular.module('newTab')
       return deferred.promise;
     };
 
+    /**
+     * @ngdoc method
+     * @name getHistory
+     * @methodOf newTab.ChromeApi
+     * @description get History with the set Configuration
+     * @returns {promise}
+     */
     var getHistory = function() {
       var deferred = $q.defer();
       var config = configuration.getHistoryConfiguration();
@@ -62,6 +80,14 @@ angular.module('newTab')
       return deferred.promise;
     };
 
+    /**
+     * @ngdoc method
+     * @name getVisits
+     * @methodOf newTab.ChromeApi
+     * @description get Visits for a specific Page - The Depth of retrievable Visits can be configured
+     * @param page
+     * @returns {promise}
+     */
     var getVisits = function(page) {
       var deferred = $q.defer();
       var _config = {'url': page.url };
@@ -77,6 +103,14 @@ angular.module('newTab')
       return deferred.promise;
     };
 
+    /**
+     * @ngdoc method
+     * @name getStorage
+     * @methodOf newTab.ChromeApi
+     * @description get Data of Storage - If no variable is set get complete Storage is return - else it is tried to get the specific storage-data
+     * @param variable
+     * @returns {promise}
+     */
     var getStorage = function(variable) {
       var deferred = $q.defer();
       chrome.storage.local.get(variable, function(response) {
@@ -103,6 +137,39 @@ angular.module('newTab')
       return deferred.promise;
     };
 
+    /**
+     * @ngdoc method
+     * @name getStoredConfiguration
+     * @methodOf newTab.ChromeApi
+     * @description get Explicitly the Configuration-Data from the Local Storage
+     * @returns {promise}
+     */
+    var getStoredConfiguration = function() {
+      var deferred = $q.defer();
+      getStorage('configuration')
+        .then(function(response) {
+          if(response) {
+            $log.debug('stored Configuration found', response);
+            return response;
+          } else {
+            $log.debug('no stored Configuration found trying to build');
+            var configObject = {
+              'version': 0.01
+            };
+            //TODO: Put this in an extra Function that returns a promise
+            chrome.storage.local.set({'configuration':configObject}, function(response) {});
+          }
+        });
+      return deferred.promise;
+    };
+
+    /**
+     * @ngdoc method
+     * @name getStorageBytesInUse
+     * @methodOf newTab.ChromeApi
+     * @description get Bytes so far used in the storage (5MB locally available)
+     * @returns {promise}
+     */
     var getStorageBytesInUse = function() {
       var deferred = $q.defer();
       chrome.storage.local.getBytesInUse(function(response) {
@@ -116,26 +183,6 @@ angular.module('newTab')
       });
       return deferred.promise;
     };
-
-    var getStoredConfiguration = function() {
-      var deferred = $q.defer();
-      getStorage('configuration')
-        .then(function(response) {
-          if(response) {
-            $log.debug('stored Configuration found', response);
-            return response;
-          } else {
-            $log.debug('no stored Configuration found trying to build');
-            var configObject = {
-              'version': 0.01
-            }
-            chrome.storage.local.set({'configuration':configObject}, function(response) {
-
-            });
-          }
-        });
-      return deferred.promise;
-    }
 
     return {
       getBookmarks: getBookmarks,
