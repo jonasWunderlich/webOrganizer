@@ -40,7 +40,7 @@
         <ul>
             <li ng-repeat="site in allSites" class="panel" ng-class="getPanelClasses(site)">
                 <div class="head">
-                  <div class="favicon"><img src="{{'chrome://favicon/'+site.url}}"></div>
+                  <div class="favicon"><img ng-src="{{'chrome://favicon/'+site.url}}"></div>
                   <div class="contexts"></div>
                 </div>
                 <a href="{{site.url}}">
@@ -69,6 +69,7 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/randomcolor/randomColor.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

@@ -64,7 +64,8 @@ angular.module('newTab')
       var result = {};
       _.each(bookmarkFolder, function(item) {
         var entry = _.omit(item, 'id', 'dateGroupModified', 'dateAdded', 'children');
-        entry.color = '#FFF';
+        //entry.color = '#FFF';
+        entry.color = randomColor();
         result[item.id] = entry;
         // TODO: Maybe its better to filter empty objects before the recursion
         _.merge(result, setupContextOptions(item.children))

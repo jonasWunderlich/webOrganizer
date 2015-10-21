@@ -11,7 +11,8 @@
     "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
     "angular-route": "~1.4.7",
     "angular-animate": "~1.4.7",
-    "angular-touch": "~1.4.7"
+    "angular-touch": "~1.4.7",
+    "randomcolor": "randomColor#~0.4.0"
   },
   "devDependencies": {
     "chai": "~3.3.0",
