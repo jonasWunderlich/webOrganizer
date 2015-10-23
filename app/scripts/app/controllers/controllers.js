@@ -119,21 +119,59 @@ angular.module('newTab')
       chrome.tabs.update(tab.id, {selected: true});
     };
 
-    $scope.createTabs = function(contextId) {
-      $scope.storageData.deaktivatedTabs[contextId].forEach(function(tab) {
+
+
+    $scope.toggleContext = function(context) {
+      $log.debug('Toggle Context', context);
+      $log.debug('Toggle Context', deactivatedTabs);
+
+      if(deactivatedTabs[context]) {
+        $scope.createTabs(context);
+      } else {
+      //} else if (typeof deactivatedTabs.context !== 'undefined'){
+
+        $scope.deactivateContext(context);
+      }
+    };
+
+    var deactivatedTabs = [];
+
+    $scope.createTabs = function(context) {
+      $log.debug('Create Tabs of Context');
+      deactivatedTabs[context].forEach(function(tab) {
         chrome.tabs.create(tab, function(callback) {
-
-          //options = {
-          //  windowId: 0,
-          //  index: 0,
-          //  url: 0,
-          //  active: 0,
-          //  selected: 0,
-          //  pinned: 0,
-          //  openerTabId: 0
-          //};
-
+          delete deactivatedTabs[context];
+          //deactivatedTabs[context] = '';
+          //var index = deactivatedTabs.indexOf(context);
+          //if (index > -1) {
+          //  deactivatedTabs.splice(index, 1);
+          //}
+          $log.debug('tab created', callback);
         });
+      });
+    };
+
+    $scope.deactivateContext = function(context) {
+      $log.debug('Deactivate Context / close all Tabs');
+      var removeTabs = [];
+      var indexesOfTabsToRemove = [];
+      $scope.allSites.forEach(function(site) {
+        if(site.tab && site.context === context) {
+          var tabToRemove = {
+            windowId: site.tab.windowId,
+            index: site.tab.id,
+            url: site.url,
+            active: site.tab.active,
+            pinned: site.tab.pinned,
+            openerTabId: site.tab.openerTabId
+          };
+          removeTabs.push(tabToRemove);
+          indexesOfTabsToRemove.push(site.tab.id);
+        }
+      });
+      console.log(removeTabs);
+      chrome.tabs.remove(indexesOfTabsToRemove, function(){
+        deactivatedTabs[context] = removeTabs;
       });
     };
 
