@@ -1,18 +1,16 @@
 <div class="panel" ng-class="getPanelClasses(site)">
   <div class="tab" >
-    <div class="ear" ng-if="isTab(site)" ng-click="activateTab(site.tab)"></div>
+    <div class="ear" ng-if="isTab(site)" ng-click="closeTab(site)"></div>
   </div>
   <div class="head" style="{{getContextColor(site)}}">
     <div class="favicon"><img ng-src="{{'chrome://favicon/'+site.url}}"></div>
     <div class="contexts" ng-if="site.context" ng-click="setBookmark(site)">{{site.context}}</div>
   </div>
-  <a href="{{site.url}}">
-    <div class="content" style="{{getContextColorIfBookmark(site)}}">
-      <!--<div class="content" style="background:"{{storageData.contextOptions[site.context].color}}">-->
-      <!--<div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>-->
-      <!--{{storageData.contextOptions[site.context].color}}-->
-      <div>{{site.title | limitTo:30}}</div>
-      <!--<a ng-click="toggleContext(site.context)">toggle</a>-->
-    </div>
-  </a>
+  <div class="content" style="{{getContextColorIfBookmark(site)}}" ng-click="openContent(site)">
+    <!--<div class="content" style="background:"{{storageData.contextOptions[site.context].color}}">-->
+    <!--<div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>-->
+    <!--{{storageData.contextOptions[site.context].color}}-->
+    <div>{{site.title | limitTo:30}}</div>
+    <!--<a ng-click="toggleContext(site.context)">toggle</a>-->
+  </div>
 </div>

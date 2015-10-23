@@ -17,7 +17,7 @@ angular.module('newTab').directive('pagePanel', function ($log) {
   return {
     restrict: 'EA',
     replace: true,
-    templateUrl: 'scripts/app/views/page-panel.html',
+    templateUrl: 'views/page-panel.html',
     scope: {
       'site': '=',
       'context:': '='
