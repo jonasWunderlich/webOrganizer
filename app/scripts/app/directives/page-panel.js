@@ -88,6 +88,14 @@ angular.module('newTab').directive('pagePanel', function ($log) {
         chrome.tabs.update(tab.id, { selected: true });
       };
 
+      scope.closeTab = function (site) {
+        $log.debug('trying to close tab', site);
+        chrome.tabs.remove(site.tab.id, function (result) {
+          $log.debug('Tab Closed', site);
+          delete site.tab;
+        });
+      };
+
       scope.toggleContext = function (context) {
         $log.debug('Toggle Context', context);
         $log.debug('Toggle Context', deactivatedTabs);
@@ -96,6 +104,14 @@ angular.module('newTab').directive('pagePanel', function ($log) {
           scope.createTabs(context);
         } else {
           scope.deactivateContext(context);
+        }
+      };
+
+      scope.openContent = function (site) {
+        if (site.tab) {
+          scope.activateTab(tab);
+        } else {
+          window.location = site.url;
         }
       };
     }

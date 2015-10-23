@@ -142,23 +142,24 @@ angular.module('newTab').service('ChromeApi', function ($log, $http, $q, configu
    * @description get Explicitly the Configuration-Data from the Local Storage
    * @returns {promise}
    */
-  var getStoredConfiguration = function getStoredConfiguration() {
-    var deferred = $q.defer();
-    getStorage('configuration').then(function (response) {
-      if (response) {
-        $log.debug('stored Configuration found', response);
-        return response;
-      } else {
-        $log.debug('no stored Configuration found trying to build');
-        var configObject = {
-          'version': 0.01
-        };
-        //TODO: Put this in an extra Function that returns a promise
-        chrome.storage.local.set({ 'configuration': configObject }, function (response) {});
-      }
-    });
-    return deferred.promise;
-  };
+  //var getStoredConfiguration = function() {
+  //  var deferred = $q.defer();
+  //  getStorage('configuration')
+  //    .then(function(response) {
+  //      if(response) {
+  //        $log.debug('stored Configuration found', response);
+  //        return response;
+  //      } else {
+  //        $log.debug('no stored Configuration found trying to build');
+  //        var configObject = {
+  //          'version': 0.01
+  //        };
+  //        //TODO: Put this in an extra Function that returns a promise
+  //        chrome.storage.local.set({'configuration':configObject}, function(response) {});
+  //      }
+  //    });
+  //  return deferred.promise;
+  //};
 
   /**
    * @ngdoc method
@@ -187,8 +188,8 @@ angular.module('newTab').service('ChromeApi', function ($log, $http, $q, configu
     getHistory: getHistory,
     getVisits: getVisits,
     getStorageBytesInUse: getStorageBytesInUse,
-    getStorage: getStorage,
-    getStoredConfiguration: getStoredConfiguration
+    getStorage: getStorage
+    //getStoredConfiguration: getStoredConfiguration
   };
 });
 //# sourceMappingURL=chromeApi.js.map

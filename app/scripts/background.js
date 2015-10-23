@@ -74,6 +74,27 @@ function listenToTabEvents() {
   });
 }
 
+function setupStorage() {
+  chrome.storage.local.get(function (response) {
+
+    if (Object.keys(response).length === 0) {
+      console.log('no local Data stored - trying to build');
+      var storageData = {
+        'configuration': {
+          'maxResults': 50
+        },
+        'contextOptions': {},
+        'tabConnections': {}
+      };
+      chrome.storage.local.set(storageData, function (response) {
+        console.log('storageData was initialized', response);
+      });
+    } else {
+      console.log('local Data found :-)');
+    }
+  });
+}
+
 /**
  * @name setupTabMenu
  * @description Creates an entry into the ContextMenu and listens to ClickEvents
@@ -107,9 +128,11 @@ function listenToTabEvents() {
  */
 function _init() {
 
-  //chrome.runtime.onInstalled.addListener(function (details) {
-  //  console.log('previousVersion', details.previousVersion);
-  //});
+  chrome.runtime.onInstalled.addListener(function (details) {
+    console.log('WebOrganizer installed / updated');
+    console.log('previousVersion', details.previousVersion);
+    setupStorage();
+  });
 
   setBadgeText('bg');
   listenToTabEvents();
