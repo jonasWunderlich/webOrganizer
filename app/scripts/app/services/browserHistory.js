@@ -92,7 +92,7 @@ angular.module('newTab')
            */
           domainCollector[domainIndex] = site.url.substr(0, 20);
           domainIndex++;
-          $log.debug(domainCollector);
+          //$log.debug('DomainCollector',domainCollector);
 
           // I.A  Set Bookmark & Context if found
           chrome.bookmarks.search({url: site.url}, function(foundBookmark) {
@@ -148,14 +148,13 @@ angular.module('newTab')
 
 
               if(!site.context) {
-                console.log(site.url);
+                //console.log(site.url);
               }
 
 
 
 
 
-              //$log.debug('found', found);
 
 
               // TODO: connect linked sites with visitItems

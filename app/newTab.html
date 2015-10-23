@@ -14,7 +14,7 @@
 
 <body>
 
-<div id="historycontent" ng-controller="MainController">
+<div id="historycontent" ng-controller="NewTabPageController">
 
     <div class="debug">
       <h3>History</h3>
@@ -27,35 +27,11 @@
         <h3>Tabs</h3>
         <pre>{{openedTabs|json}}</pre>
     </div>
-
-    <div id="config-bar">
-        <div id="simple-slider" class="conf dragdealer rounded-cornered">
-            <div id="handle_amount" class="red-bar handle">drag me</div>
-        </div>
-        <button id="hide-google">nosearch</button>
-        <div id="search-field"><input type="text" id="search" class="rounded-cornered" placeholder="Suche"></div>
-        <div class="clear"></div>
-    </div>
     <div id="panel-content">
         <ul>
-            <li ng-repeat="site in allSites | orderBy:'context'" class="panel" ng-class="getPanelClasses(site)">
-                <div class="tab" >
-                  <div class="ear" ng-if="isTab(site)" ng-click="activateTab(site.tab)"></div>
-                </div>
-                <div class="head" style="{{getContextColor(site)}}">
-                  <div class="favicon"><img ng-src="{{'chrome://favicon/'+site.url}}"></div>
-                  <div class="contexts" ng-if="site.context" ng-click="setBookmark(site)">{{site.context}}</div>
-                </div>
-                <a href="{{site.url}}">
-                    <div class="content" style="{{getContextColorIfBookmark(site)}}">
-                    <!--<div class="content" style="background:"{{storageData.contextOptions[site.context].color}}">-->
-                      <!--<div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>-->
-                      <!--{{storageData.contextOptions[site.context].color}}-->
-                      <div>{{site.title | limitTo:30}}</div>
-                      <a ng-click="toggleContext(site.context)">toggle</a>
-                    </div>
-                </a>
-            </li>
+          <li ng-repeat="site in allSites | orderBy:'context'">
+            <page-panel site="site" context="{{storedContexts[site.context]['color']}}"></page-panel>
+          </li>
         </ul>
     </div>
 </div>
@@ -84,7 +60,8 @@
 <script src="scripts/app/services/chromeApi.js"></script>
 <script src="scripts/app/services/storage.js"></script>
 <script src="scripts/app/services/browserHistory.js"></script>
-<script src="scripts/app/controllers/controllers.js"></script>
+<script src="scripts/app/directives/page-panel.js"></script>
+<script src="scripts/app/controllers/newTabPage.js"></script>
 
 <!-- build:js scripts/newTab.js -->
 <script src="scripts/newTab.js"></script>
