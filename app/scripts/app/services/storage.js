@@ -22,7 +22,7 @@ angular.module('newTab')
       ChromeApi.getBookmarks()
         .then(function(bookmarks) {
           ChromeApi.getStorage('contextOptions').then(function(contextOptions) {
-              $log.debug('Context Options found', contextOptions);
+              $log.debug('Context Options found');
               //TODO: For now Options are rewritten with every reload for Setting up the correct settings
               writeContextOptions(bookmarks);
               deferred.resolve(contextOptions);

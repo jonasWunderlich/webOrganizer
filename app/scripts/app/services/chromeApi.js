@@ -70,7 +70,7 @@ angular.module('newTab')
       var config = configuration.getHistoryConfiguration();
       chrome.history.search(config, function(response) {
         if(response) {
-          $log.debug('getHistory data retrieved:', response);
+          $log.debug('getHistory data retrieved:');
           deferred.resolve(response)
         } else {
           $log.debug('Unable to retrive getHistory', response);
@@ -118,7 +118,7 @@ angular.module('newTab')
           if(variable !== undefined) {
             if (response[variable] !== undefined) {
               var _storageData = response[variable];
-              $log.debug('Storage data for '+variable+' retrieved:', _storageData);
+              $log.debug('Storage data for '+variable+' retrieved:');
               deferred.resolve(_storageData);
             } else {
               $log.debug('Storage variable '+variable+' is not set');
