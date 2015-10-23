@@ -60,8 +60,8 @@ a {
   width: 100px;
   display: inline-table;
   margin: 2px;
-  background: rgba(255, 255, 255, 0.77);
   box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
+  cursor: pointer;
 }
 /* line 62, main.scss */
 .panel.visits-1 {
@@ -76,32 +76,59 @@ a {
   width: 200px;
 }
 /* line 71, main.scss */
-.panel:hover {
-  background: #FFF;
-  opacity: 1;
-  cursor: pointer;
+.panel.same {
+  margin-left: -5px;
+}
+/* line 74, main.scss */
+.panel .tab {
+  height: 20px;
 }
 /* line 76, main.scss */
+.panel .tab .ear {
+  display: table-caption;
+  width: 100px;
+  height: 20px;
+  border-radius: 5px 5px 0 0;
+  background: #AD3535;
+  cursor: pointer;
+}
+/* line 87, main.scss */
 .panel .head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 81, main.scss */
-.panel.bookmark .head {
-  background: #353535;
-  opacity: 0.7;
+/* line 91, main.scss */
+.panel .head .favicon {
+  display: inline-block;
 }
-/* line 85, main.scss */
+/* line 94, main.scss */
+.panel .head .contexts {
+  display: inline-block;
+}
+/* line 105, main.scss */
 .panel.tab .head {
-  background: yellow;
   opacity: 1;
 }
-/* line 89, main.scss */
+/* line 109, main.scss */
 .panel .content {
   color: #000;
+  background: rgba(255, 255, 255, 0.77);
   min-height: 70px;
   padding: 2px;
+}
+/* line 117, main.scss */
+.panel:hover .tab .ear {
+  background: #FFF;
+}
+/* line 121, main.scss */
+.panel:hover .head {
+  opacity: .8 !important;
+}
+/* line 124, main.scss */
+.panel:hover .content {
+  background: #FFF !important;
+  opacity: 1;
 }
 
 /*

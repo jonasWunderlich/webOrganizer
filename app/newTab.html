@@ -38,15 +38,20 @@
     </div>
     <div id="panel-content">
         <ul>
-            <li ng-repeat="site in allSites" class="panel" ng-class="getPanelClasses(site)" style="{{getContextColor(site)}}">
-                <div class="head">
+            <li ng-repeat="site in allSites | orderBy:'context'" class="panel" ng-class="getPanelClasses(site)">
+                <div class="tab" >
+                  <div class="ear" ng-if="isTab(site)" ng-click="activateTab(site.tab)"></div>
+                </div>
+                <div class="head" style="{{getContextColor(site)}}">
                   <div class="favicon"><img ng-src="{{'chrome://favicon/'+site.url}}"></div>
-                  <div class="contexts"></div>
+                  <div class="contexts" ng-if="site.context" ng-click="setBookmark(site)">{{site.context}}</div>
                 </div>
                 <a href="{{site.url}}">
-                    <div class="content">
-                        <div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>
-                        <div>{{site.title | limitTo:30}}</div>
+                    <!--<div class="content" style="{{getContextColorIfBookmark(site)}}">-->
+                    <div class="content" style="background:"{{storageData.contextOptions[site.context].color}}">
+                      <!--<div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>-->
+                      {{storageData.contextOptions[site.context].color}}
+                      <div>{{site.title | limitTo:30}}</div>
                     </div>
                 </a>
             </li>
