@@ -1,20 +1,105 @@
-@charset "UTF-8";
-/* line 1, main.scss */
+/**
+ * This is the main SCSS file and should be the only one that
+ * is actually exported to CSS.
+ */
+/* line 1, _standards.scss */
 body {
   background: #1B746E;
   padding: 10px;
   margin: 0;
 }
 
-/* line 7, main.scss */
+/* line 7, _standards.scss */
 ul {
   padding: 0;
 }
+/* line 9, _standards.scss */
+ul li {
+  list-style: none;
+}
 
-/* line 13, main.scss */
+/* line 14, _standards.scss */
 a {
   text-decoration: none;
   color: #000;
+}
+
+/* line 1, _panel.scss */
+.panel {
+  float: left;
+  font-size: 12px;
+  width: 100px;
+  display: inline-table;
+  margin: 2px;
+  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
+  cursor: pointer;
+}
+/* line 12, _panel.scss */
+.panel.visits-1 {
+  width: 110px;
+}
+/* line 15, _panel.scss */
+.panel.visits-2 {
+  width: 120px;
+}
+/* line 18, _panel.scss */
+.panel.visits-3 {
+  width: 200px;
+}
+/* line 21, _panel.scss */
+.panel.same {
+  margin-left: -5px;
+}
+/* line 24, _panel.scss */
+.panel .tab {
+  height: 20px;
+}
+/* line 26, _panel.scss */
+.panel .tab .ear {
+  display: table-caption;
+  width: 100px;
+  height: 20px;
+  border-radius: 5px 5px 0 0;
+  background: #AD3535;
+  cursor: pointer;
+}
+/* line 37, _panel.scss */
+.panel .head {
+  background: #E9E9E9;
+  padding: 4px;
+  height: 16px;
+}
+/* line 41, _panel.scss */
+.panel .head .favicon {
+  display: inline-block;
+}
+/* line 44, _panel.scss */
+.panel .head .contexts {
+  display: inline-block;
+}
+/* line 55, _panel.scss */
+.panel.tab .head {
+  opacity: 1;
+}
+/* line 59, _panel.scss */
+.panel .content {
+  color: #000;
+  background: rgba(255, 255, 255, 0.77);
+  min-height: 70px;
+  padding: 2px;
+}
+/* line 67, _panel.scss */
+.panel:hover .tab .ear {
+  background: #FFF;
+}
+/* line 71, _panel.scss */
+.panel:hover .head {
+  opacity: .8 !important;
+}
+/* line 74, _panel.scss */
+.panel:hover .content {
+  background: #FFF !important;
+  opacity: 1;
 }
 
 /* line 17, main.scss */
@@ -53,309 +138,4 @@ a {
   margin-left: 240px;
   display: none;
 }
-
-/* line 52, main.scss */
-.panel {
-  font-size: 12px;
-  width: 100px;
-  display: inline-table;
-  margin: 2px;
-  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
-  cursor: pointer;
-}
-/* line 62, main.scss */
-.panel.visits-1 {
-  width: 110px;
-}
-/* line 65, main.scss */
-.panel.visits-2 {
-  width: 120px;
-}
-/* line 68, main.scss */
-.panel.visits-3 {
-  width: 200px;
-}
-/* line 71, main.scss */
-.panel.same {
-  margin-left: -5px;
-}
-/* line 74, main.scss */
-.panel .tab {
-  height: 20px;
-}
-/* line 76, main.scss */
-.panel .tab .ear {
-  display: table-caption;
-  width: 100px;
-  height: 20px;
-  border-radius: 5px 5px 0 0;
-  background: #AD3535;
-  cursor: pointer;
-}
-/* line 87, main.scss */
-.panel .head {
-  background: #E9E9E9;
-  padding: 4px;
-  height: 16px;
-}
-/* line 91, main.scss */
-.panel .head .favicon {
-  display: inline-block;
-}
-/* line 94, main.scss */
-.panel .head .contexts {
-  display: inline-block;
-}
-/* line 105, main.scss */
-.panel.tab .head {
-  opacity: 1;
-}
-/* line 109, main.scss */
-.panel .content {
-  color: #000;
-  background: rgba(255, 255, 255, 0.77);
-  min-height: 70px;
-  padding: 2px;
-}
-/* line 117, main.scss */
-.panel:hover .tab .ear {
-  background: #FFF;
-}
-/* line 121, main.scss */
-.panel:hover .head {
-  opacity: .8 !important;
-}
-/* line 124, main.scss */
-.panel:hover .content {
-  background: #FFF !important;
-  opacity: 1;
-}
-
-/*
-.contextgroup {
-  margin: 0.2em 1.3em 0 0.3em;
-  display:inline;
-  &.googleblock {
-    margin: 0;
-  }
-  &:hover {
-    border-top: 10px solid #E8FFCF;
-  }
-}
-
-
-
-
-
-.notab, .tabbutton {
-  width: 20px;
-  height: 15px;
-  margin-top: 4px;
-}
-
-.tabbutton {
-  background: #087DB4;
-  width: 50%;
-  border-radius: 5px 5px 0 0;
-  border-bottom: 0;
-}
-
-.itsatab {
-  .head {
-    background: #353535;
-  }
-  .infocontent,
-  .infocontent a {
-    background: #353535;
-    color: #FFFFFF;
-  }
-}
-
-
-.panel.image,
-.panel.image .head,
-.panel.image .infocontent,
-.panel.image p {
-  background: none;
-}
-.panel.image p {
-  color: #FFFFFF;
-  opacity: .7;
-}
-
-.panel.document,
-.panel.document .head,
-.panel.document .infocontent,
-.panel.document p{
-  background:none;
-  width: 105px !important;
-}
-.panel.document .infocontent {
-  background: url("images/document.png") no-repeat;
-}
-
-.nocontext {
-  .panel.document {
-    .content {
-      background: url("images/document.png") no-repeat;
-    }
-    .infocontent {
-      background: none;
-    }
-  }
-}
-
-
-
-.infocontent {
-  background: #FFFFFF;
-  height: 104px;
-}
-
-
-div.link.refzero  {
-}
-div.tab {
-  margin-right:0;
-  border-right:4px dotted #FFFFFF;
-}
-
-//Eingetippte Adresse
-div.typed  {
-  width:120px;
-  .infocontent {
-    background: #5A5A5A url("images/blockquote.png") no-repeat bottom right;
-    a {
-      color: #FFFFFF;
-    }
-  }
-}
-
-
-//Extern aufgerufene Adresse
-div.auto_toplevel,
-div.keyword {
-    width: 160px;
-}
-div.auto_toplevel .infocontent a,
-div.keyword .infocontent a {
-    color:  #000;
-}
-div.auto_toplevel .infocontent {
-    background: #ABCBDA url("images/blockquote.png") no-repeat bottom right;
-}
-div.keyword .infocontent {
-    background: #C0DAAB url("images/blockquote.png") no-repeat bottom right;
-}
-
-
-
-//Google Suchergebnisse
-div.google {
-  box-shadow:none;
-  margin: 0 1em 0 .4em;
-  width:129px;
-  .head {
-    background: none;
-    opacity: 0;
-  }
-  .content {
-    background: url("images/searchbubble.png") no-repeat;
-    padding-left: 6px;
-  }
-  .infocontent {
-    background:none !important;
-    a {
-      color:#505050;
-      font-weight:bold;
-    }
-  }
-}
-
-
-div.mail {
-  box-shadow:none;
-  width:129px;
-  .head {}
-  .content {
-    box-shadow: none;
-  }
-  .infocontent {
-    background: none;
-    background: #C9B771 url("images/mail-04.png") 6 48 no-repeat;
-  }
-}
-
-
-//Müllpanel
-div.empty  {
-  display:none;
-}
-
-
-
-
-div.bookmark {
-  a {
-    color: #000 !important;
-  }
-}
-
-
-//Seitenaufrufe
-div.panel.rel_big {   width:300px;}
-div.panel.rel_some {  width:200px;}
-div.panel.rel_twice { width:150px;}
-
-//Query-Importance
-div.lessimportant  {
-  background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
-  width:90px;
-  opacity: .8;
-  font-size: 0.8em;
-  border:0;
-}
-div.unimportant  {
-  background: #5E5E5E url("images/blockquote.png") no-repeat bottom right !important;
-  width:80px;
-  opacity: .6;
-  font-size: 0.6em;
-  border:0;
-}
-
-
-
-div.reload  {
-  background: rgb(0, 255, 255) url("images/blockquote.png") no-repeat bottom right !important;
-}
-div.form_submit  {
-  background: yellow !important;
-}
-div.generated  {
-  background: orange url("images/blockquote.png") no-repeat bottom right !important;
-}
-div.auto_bookmark  {
-  background: rgb(103, 140, 255) url("images/blockquote.png") no-repeat bottom right !important;
-}
-div.forward_back {
-    background:#001FFF !important;
-}
-
-
-
-div.stacking.panel {
-  margin-left: -71px;
-  margin-top: -9px;
-  opacity: .4;
-  margin-right: -85px;
-  width: 106px;
-  position: relative;
-  z-index: -2;
-  .head button {
-    display:none;
-  }
-}
-
-*/
-
 /*# sourceMappingURL=main.css.map */
