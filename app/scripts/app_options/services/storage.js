@@ -1,6 +1,7 @@
-angular.module('app_options', [])
-  .service('Storage', ['$rootScope', function($rootScope) {
+'use strict';
 
-    return {
-    };
-  }]);
+angular.module('app_options', []).service('Storage', ['$rootScope', function ($rootScope) {
+
+  return {};
+}]);
+//# sourceMappingURL=storage.js.map

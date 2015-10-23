@@ -78,7 +78,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= config.srcScript %>',
-          src: '{,*/}*.js',
+          //src: '{,*/}*.js',
+          src: '**/*.js',
           dest: '<%= config.app %>/scripts',
           ext: '.js'
         }]
@@ -264,7 +265,7 @@ module.exports = function (grunt) {
             '{,*/}*.html',
             'styles/{,*/}*.css',
             'styles/fonts/{,*/}*.*',
-            '_locales/{,*/}*.json',
+            '_locales/{,*/}*.json'
           ]
         }]
       }
@@ -339,7 +340,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          map: true,
+          map: true
         },
         files: [{
           expand: true,

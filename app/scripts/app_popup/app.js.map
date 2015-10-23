@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../scripts.babel/app_popup/app.js"],"names":[],"mappings":"AAAA,YAAY,CAAC;;;AAGb,OAAO,CAAC,MAAM,CAAC,OAAO,EAAE,CACtB,gBAAgB,EAChB,mBAAmB,CACpB,CAAC,CAAC","file":"app.js","sourcesContent":["'use strict';\n\n// Declare app level module which depends on filters, and services\nangular.module('popup', [\n  'popup.services',\n  'popup.controllers'\n]);"]}
