@@ -25,7 +25,25 @@ angular.module('newTab')
             var i = 0;
             sites.reverse().forEach(function(site) {
               ChromeApi.getVisits(site).then(function(visits){
-                site.visits = visits.slice(0, configuration.getMaxVisits());
+                //TODO: reduce amout of visitItems but (not with slice :-P)
+                //site.visits = visits.slice(0, configuration.getMaxVisits());
+                site.visits = visits;
+                site.visits.forEach(function(visit) {
+
+                  if(visit.referringVisitId === "0" && visit.transition === "link") {
+                    //TODO: find a way to set the still missing references (Find a PATTERN!)
+                    if(tabconnections[visit.visitId]) {
+                      //$log.debug('found tab reference:', tabconnections[visit.visitId]);
+                      //$log.debug('for', site.url);
+                      visit.referringVisitId = tabconnections[visit.visitId];
+                      site.refByNewTab = true;
+                    }
+                  }
+                  if(visit.transition === "reload") {
+                    site.reload = true;
+                    //TODO: find the orginal source of reloaded visits
+                  }
+                });
               });
               i++;
               if(i===sites.length) {
@@ -47,7 +65,6 @@ angular.module('newTab')
     var getProcessedHistory = function() {
 
       var deferred = $q.defer();
-      // Vorraussetzungen: History+VisitItems / TabConnections / Bookmarks / Context-Options
 
       $q.all([
         getHistoryWithVisits(),
@@ -55,14 +72,28 @@ angular.module('newTab')
         ChromeApi.getOpenTabs(),
         ChromeApi.getStorage()
       ]).then(function(data) {
+
+        $log.debug('Starting to Process advanced PageHistory');
+
         var history = data[0];
         var bookmarks = data[1];
         var tabs = data[2];
         var configuration = data[3];
-        $log.debug('got everything I need', data);
+
+        var domainIndex = 0;
+        var domainCollector = {};
+        var indexNeutralContext = 0;
 
         // I: First Loop:
         history.forEach(function(site) {
+
+          /**
+           * Collect Subset of URLs for linking Pages that have no referringVisitId
+           */
+          domainCollector[domainIndex] = site.url.substr(0, 20);
+          domainIndex++;
+          $log.debug(domainCollector);
+
           // I.A  Set Bookmark & Context if found
           chrome.bookmarks.search({url: site.url}, function(foundBookmark) {
             //TODO (optional): length > 2 would mean Site is more than once bookmarked
@@ -71,14 +102,61 @@ angular.module('newTab')
               site.bookmark = foundBookmark[0]['id'];
               // more options are: alternative Title, Date added
             }
+
             // I.B Set Tabs if found
             chrome.tabs.query({url: site.url}, function(foundTab) {
               if(foundTab.length > 0) {
-                site.tabOpen = foundTab[0];
-                $log.debug(site);
+                site.tab = foundTab[0];
               }
 
-              
+              //var found = _.where(history, { 'visits': { 'referringVisitId': site.visits[0]['visitId']}});
+              //$log.debug('search reference for', site.url);
+              site.visits.some(function(visit) {
+                return history.some(function(historyItem) {
+                  return historyItem.visits.some(function(historyVisitItem) {
+                    var _foundReference = (visit.referringVisitId === historyVisitItem.visitId && visit.id !== historyVisitItem.id);
+                    if (_foundReference) {
+                      site.FOUNDTHEREFERENCE = historyItem.url;
+                      //$log.debug('FOUND - Site', site);
+                      //$log.debug('FOUND - hi', historyItem);
+                      /**
+                       * Here happens some important magic:
+                       * if we find a link-reference to an existing page we lookup if the found page has already a context
+                       * if so we take this context for this site
+                       * if not we give them both a new context
+                       */
+                      if(historyItem.context) {
+                        if (site.context) {
+                          //TODO: If site.context exists what happens to this context?
+                        }
+                        site.context = historyItem.context;
+                      } else {
+                        if (site.context) {
+                           historyItem.context = site.context;
+                          //TODO: Check if this has any implications
+                        } else {
+                          historyItem.context = site.context = 'neutral-'+indexNeutralContext;
+                          indexNeutralContext++;
+                          //TODO: Check if this has any implications
+                        }
+                      }
+                    }
+                    return _foundReference;
+                  });
+                });
+              });
+
+
+              if(!site.context) {
+                console.log(site.url);
+              }
+
+
+
+
+
+              //$log.debug('found', found);
+
 
               // TODO: connect linked sites with visitItems
               // TODO: connect linked sites with tabConnections
