@@ -15,6 +15,3 @@ angular
     //$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*((https?|ftp|file|blob|chrome|chrome-extension):|data:image\/)/);
   });
-
-
-//unsafe:chrome://favicon/https://www.goo ...
