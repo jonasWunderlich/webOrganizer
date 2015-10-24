@@ -9,14 +9,11 @@
     <div class="panel-contexts" ng-if="site.context" ng-click="setBookmark(site)">{{site.context}}</div>
   </div>
 
-  <div class="panel-content" style="{{getContextColorIfBookmark(site)}}" ng-click="openContent(site)" ng-if="isTab(site)">
+  <div class="panel-content" style="{{getContextColorIfBookmark(site)}}" ng-click="activateTab(site)" ng-if="isTab(site)">
     <div>{{site.title | limitTo:30}}</div>
   </div>
 
   <a class="panel-content" href="{{site.url}}" style="{{getContextColorIfBookmark(site)}}" ng-if="!isTab(site)">
-    <!--<div class="content" style="background:"{{storageData.contextOptions[site.context].color}}">-->
-    <!--<div>{{site.id}} - {{site.visitCount}} - {{site.typedCount}}</div>-->
-    <!--{{storageData.contextOptions[site.context].color}}-->
     <div>{{getTitle() | limitTo:30}}</div>
     <!--<a ng-click="toggleContext(site.context)">toggle</a>-->
   </a>
