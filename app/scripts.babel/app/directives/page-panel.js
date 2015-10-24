@@ -25,7 +25,11 @@ angular.module('newTab')
       },
       link: function(scope, element, attrs) {
 
-
+        /**
+         *
+         * @param site
+         * @returns {string}
+         */
         scope.getContextColor = function(site) {
           if(site.context) {
             if(site.context.indexOf('neutral') !== 0) {
@@ -34,6 +38,11 @@ angular.module('newTab')
           }
         };
 
+        /**
+         *
+         * @param site
+         * @returns {string}
+         */
         scope.getContextColorIfBookmark = function(site) {
           if(site.context && site.bookmark) {
             if(site.context.indexOf('neutral') !== 0) {
@@ -42,32 +51,64 @@ angular.module('newTab')
           }
         };
 
+        /**
+         *
+         * @param site
+         * @returns {$.tab|tab|$.fn.tab.$.tab}
+         */
         scope.isTab = function(site) {
           return site.tab;
         };
 
+        /**
+         *
+         * @param site
+         * @returns {string}
+         */
         scope.getPanelClasses = function(site) {
 
-          var _visited, _bookmark, _tab, _context;
+          var _classes;
 
-          _bookmark = (site.bookmark) ? 'bookmark' : '';
-          _tab = (site.tab) ? 'tab' : '';
-          _context = '';
+          _classes = (site.bookmark) ? 'bookmark ' : '';
+          _classes += (site.tab) ? 'tab ' : '';
+          _classes += site.url.substr(site.url.indexOf('://')+3,12).split('.').join('_')+' ';
+
+          _classes += (site.url.substr(-4,1) === '.') ? site.url.substr(-3,3)+' ' : '';
 
           switch (site.visitCount > 1) {
             case (site.visitCount < 5):
-              _visited = 'visits-1';
+              _classes += 'visits-1';
               break;
             case (site.visitCount >= 5 && site.visitCount < 10):
-              _visited = 'visits-2';
+              _classes += 'visits-2';
               break;
             case (site.visitCount >= 10):
-              _visited = 'visits-3';
+              _classes += 'visits-3';
               break;
           }
-          return _visited + ' ' + _bookmark + ' ' + _tab + ' ' + _context;
+          return _classes;
         };
 
+        ///**
+        // *
+        // * @param site
+        // * @returns {string}
+        // */
+        //scope.getPanelContentClasses = function(site) {
+        //
+        //  var _classes, _urlClass;
+        //
+        //  _urlClass = site.url.substr(site.url.indexOf('://')+3,12).split('.').join('_');
+        //  _classes = _urlClass+' ';
+        //  //$log.debug(_urlClass);
+        //
+        //  return _classes;
+        //};
+
+        /**
+         *
+         * @param site
+         */
         scope.setBookmark = function(site) {
           if(site.bookmark) {
             chrome.bookmarks.remove(site.bookmark, function(result) {
@@ -85,11 +126,19 @@ angular.module('newTab')
           }
         };
 
+        /**
+         *
+         * @param tab
+         */
         scope.activateTab = function(tab) {
           $log.debug('trying to activate tab', tab);
           chrome.tabs.update(tab.id, {selected: true});
         };
 
+        /**
+         *
+         * @param site
+         */
         scope.closeTab = function(site) {
           $log.debug('trying to close tab', site);
           chrome.tabs.remove(site.tab.id, function(result){
@@ -98,6 +147,10 @@ angular.module('newTab')
           });
         };
 
+        /**
+         *
+         * @param context
+         */
         scope.toggleContext = function(context) {
           $log.debug('Toggle Context', context);
           $log.debug('Toggle Context', deactivatedTabs);
@@ -109,13 +162,22 @@ angular.module('newTab')
           }
         };
 
-
+        /**
+         *
+         * @param site
+         */
         scope.openContent = function(site) {
           if(site.tab) {
             scope.activateTab(tab);
           } else {
             window.location = site.url;
           }
+        };
+
+        scope.getTitle = function() {
+          $log.debug(scope.site.title !== '');
+          scope.site.title = scope.site.title.split(' - Google-Suche')[0];
+          return scope.site.title !== '' ? scope.site.title : scope.site.url.split('#')[1];
         }
 
       }

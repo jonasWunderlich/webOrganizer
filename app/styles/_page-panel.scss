@@ -1,0 +1,114 @@
+.page-panel  {
+  float: left;
+  font-size: 12px;
+  width: 100px;
+  display: inline-table;
+  margin: 2px;
+  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
+  cursor: pointer;
+
+  //  Playground for background-image out of favicon
+  //  background-size: 300px 300px;
+  //  background-repeat: no-repeat;
+
+  &.visits-1 { width: 110px; }
+  &.visits-2 { width: 120px; }
+  &.visits-3 { width: 200px; }
+  &.same {
+    margin-left: -5px;
+  }
+
+  &.www_google_d,&.www_google_c {
+    box-shadow: none;
+  }
+
+}
+
+
+
+
+.panel-tab {
+  height: 20px;
+  position: relative;
+  .panel-tab-ear {
+    position: absolute;
+    bottom: 0;
+    display: table-caption;
+    width: 100px;
+    height: 20px;
+    border-radius: 5px 5px 0 0;
+    background: #AD3535;
+    cursor: pointer;
+    &:hover {
+      padding: 1px 0;
+      height: 14px;
+      transition: height 2ms;
+    }
+  }
+  .page-panel:hover & {
+    .panel-tab-ear {
+      background: #FFF;
+    }
+  }
+}
+
+
+.panel-head {
+  background: #E9E9E9;
+  padding: 4px;
+  height: 16px;
+  .panel-favicon {
+    display: inline-block;
+  }
+  .panel-contexts {
+    display: inline-block;
+  }
+  .bookmark & {
+    //    background: #353535;
+    //    opacity: 0.7;
+  }
+  .tab & {
+    //    background: yellow;
+    opacity: 1;
+  }
+  .page-panel:hover & {
+    opacity: .8 !important;
+  }
+  .www_google_d &, .www_google_c &{
+    background: none;
+    position: absolute;
+
+  }
+}
+
+
+.panel-content {
+  display: block;
+  color: #000;
+  background: rgba(255, 255, 255, 0.77);
+  min-height: 70px;
+  padding: 5px;
+  .developer_ch & {
+    background: black;
+    color: white;
+  }
+  .www_google_d &, .www_google_c & {
+    background: url("../images/searchbubble.png") no-repeat;
+    background-size: 100% 100%;
+    padding: 34px 10px 0 10px;
+    font-style: italic;
+  }
+  .stackoverflo & {
+    background: #F08C3B;
+  }
+  .de_wikipedia &, .en_wikipedia & {
+    background: #FFF;
+  }
+  .pdf &, .jpg &, .txt &, .png &, .mp3 &, .mp4 &, .svg &, .bmp & {
+    background: yellow;
+  }
+  .page-panel:hover & {
+    background: #FFF !important;
+    opacity: 1;
+  }
+}
