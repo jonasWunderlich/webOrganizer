@@ -28,11 +28,16 @@
         <pre>{{openedTabs|json}}</pre>
     </div>
 
-    <div id="panel-content">
-        <ul>
-          <li ng-repeat="site in allSites | orderBy:'context'">
-            <page-panel site="site" context="{{storedContexts[site.context]['color']}}"></page-panel>
-          </li>
+    <div id="panel-overview">
+        <!--<ul>-->
+          <!--<li ng-repeat="site in allSites | orderBy:'context'">-->
+            <!--<page-panel site="site" context="{{storedContexts[site.context]['color']}}"></page-panel>-->
+          <!--</li>-->
+        <!--</ul>-->
+        <ul ng-repeat="(key, value) in allSites | groupBy: 'context'" class="panel-group">
+            <li ng-repeat="site in value">
+              <page-panel site="site" context-color="{{storageData.contextOptions[site.context].color}}"></page-panel>
+            </li>
         </ul>
     </div>
 
@@ -54,13 +59,14 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/randomcolor/randomColor.js"></script>
+<script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <script src="scripts.babel/app/app.js"></script>
 <script src="scripts.babel/app/services/configuration.js"></script>
 <script src="scripts.babel/app/services/chromeApi.js"></script>
-<script src="scripts.babel/app/services/storage.js"></script>
+<script src="scripts.babel/app/services/storageService.js"></script>
 <script src="scripts.babel/app/services/browserHistory.js"></script>
 <script src="scripts.babel/app/directives/page-panel.js"></script>
 <script src="scripts.babel/app/controllers/newTabPage.js"></script>

@@ -2,18 +2,18 @@
 
 /**
  * @ngdoc service
- * @name newTab.Storage
+ * @name newTab.StorageService
  * @description
  * Service for getting the Browser Storage
  */
 
 angular.module('newTab')
-  .service('Storage', function ($log, $http, $q, configuration, ChromeApi) {
+  .service('StorageService', function ($log, $http, $q, ChromeApi) {
 
     /**
      * @ngdoc method
      * @name getStoredContexts
-     * @methodOf newTab.Storage
+     * @methodOf newTab.StorageService
      * @description Checks if Context-Configuration already exists in the Storage - If not creates it
      * @returns {promise}
      */
@@ -39,7 +39,7 @@ angular.module('newTab')
     /**
      * @ngdoc method
      * @name writeContextOptions
-     * @methodOf newTab.Storage
+     * @methodOf newTab.StorageService
      * @description
      * @param bookmarks
      */
@@ -53,7 +53,7 @@ angular.module('newTab')
     /**
      * @ngdoc method
      * @name setupContextOptions
-     * @methodOf newTab.Storage
+     * @methodOf newTab.StorageService
      * @description Recursive Function for writing Context Configuration Data in the Storage
      * @param data
      * @returns {{}}

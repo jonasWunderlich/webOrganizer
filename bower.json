@@ -12,7 +12,8 @@
     "angular-route": "~1.4.7",
     "angular-animate": "~1.4.7",
     "angular-touch": "~1.4.7",
-    "randomcolor": "randomColor#~0.4.0"
+    "randomcolor": "randomColor#~0.4.0",
+    "angular-filter": "~0.5.7"
   },
   "devDependencies": {
     "chai": "~3.3.0",

@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('newTab', ['ngRoute', 'ui.bootstrap']).config(function (configurationProvider, $compileProvider) {
+angular.module('newTab', ['angular.filter', 'ngRoute', 'ui.bootstrap']).config(function (configurationProvider, $compileProvider) {
   configurationProvider.setDayRange(0, 30);
   configurationProvider.minPages(1);
   configurationProvider.maxPages(1);
