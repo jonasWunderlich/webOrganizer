@@ -24,78 +24,158 @@ angular.module('newTab').directive('pagePanel', function ($log) {
     },
     link: function link(scope, element, attrs) {
 
-      scope.getContextColor = function (site) {
-        if (site.context) {
-          if (site.context.indexOf('neutral') !== 0) {
+      /**
+       * @ngdoc method
+       * @name getContextColor
+       * @methodOf newTab.pagePanel
+       * @description Returns Background-Style for Context-Color
+       * @returns {string} Background-Style for Context
+       */
+      scope.getContextColor = function () {
+        if (scope.site.context) {
+          if (scope.site.context.indexOf('neutral') !== 0) {
             return 'background:' + scope.context;
           }
         }
       };
 
-      scope.getContextColorIfBookmark = function (site) {
-        if (site.context && site.bookmark) {
-          if (site.context.indexOf('neutral') !== 0) {
+      /**
+       * @ngdoc method
+       * @name getContextColorIfBookmark
+       * @methodOf newTab.pagePanel
+       * @description Return the Background-Style of a Context if site is set as Bookmark
+       * @returns {string} Background-Style for Context if Bookmark
+       */
+      scope.getContextColorIfBookmark = function () {
+        if (scope.site.context && scope.site.bookmark) {
+          if (scope.site.context.indexOf('neutral') !== 0) {
             return 'background:' + scope.context;
           }
         }
       };
 
-      scope.isTab = function (site) {
-        return site.tab;
+      /**
+       * @ngdoc method
+       * @name isTab
+       * @methodOf newTab.pagePanel
+       * @description Checks if site is opened as tab
+       * @returns {object} Object if tab is set or else undefined
+       */
+      scope.isTab = function () {
+        return scope.site.tab;
       };
 
-      scope.getPanelClasses = function (site) {
-
-        var _visited, _bookmark, _tab, _context;
-
-        _bookmark = site.bookmark ? 'bookmark' : '';
-        _tab = site.tab ? 'tab' : '';
-        _context = '';
-
-        switch (site.visitCount > 1) {
-          case site.visitCount < 5:
-            _visited = 'visits-1';
+      /**
+       * @ngdoc method
+       * @name getPanelClasses
+       * @methodOf newTab.pagePanel
+       * @description Sets all the different possible classes for a panel-page
+       * @returns {string}
+       */
+      scope.getPanelClasses = function () {
+        var _classes;
+        _classes = scope.site.bookmark ? 'bookmark ' : '';
+        _classes += scope.site.tab ? 'tab ' : '';
+        // sets substring as class
+        _classes += scope.site.url.substr(scope.site.url.indexOf('://') + 3, 12).split('.').join('_') + ' ';
+        // set file ending as class
+        _classes += scope.site.url.substr(-4, 1) === '.' ? scope.site.url.substr(-3, 3) + ' ' : '';
+        switch (scope.site.visitCount > 1) {
+          case scope.site.visitCount < 5:
+            _classes += 'visits-1';
             break;
-          case site.visitCount >= 5 && site.visitCount < 10:
-            _visited = 'visits-2';
+          case scope.site.visitCount >= 5 && scope.site.visitCount < 10:
+            _classes += 'visits-2';
             break;
-          case site.visitCount >= 10:
-            _visited = 'visits-3';
+          case scope.site.visitCount >= 10:
+            _classes += 'visits-3';
             break;
         }
-        return _visited + ' ' + _bookmark + ' ' + _tab + ' ' + _context;
+        return _classes;
       };
 
-      scope.setBookmark = function (site) {
-        if (site.bookmark) {
-          chrome.bookmarks.remove(site.bookmark, function (result) {
+      /**
+       * @ngdoc method
+       * @name setBookmark
+       * @methodOf newTab.pagePanel
+       * @description removes existing Bookmark or creates it in the surrounded Context
+       */
+      scope.setBookmark = function () {
+        if (scope.site.bookmark) {
+          chrome.bookmarks.remove(scope.site.bookmark, function (result) {
             $log.debug("Bookmark removed:", result);
-            site.bookmark = false;
+            scope.site.bookmark = false;
           });
         } else {
-          chrome.bookmarks.create({ 'parentId': site.context,
-            'title': site.title,
-            'url': site.url
+          chrome.bookmarks.create({ 'parentId': scope.site.context,
+            'title': scope.site.title,
+            'url': scope.site.url
           }, function (result) {
             $log.debug("Bookmark added:", result);
-            site.bookmark = result.id;
+            scope.site.bookmark = result.id;
           });
         }
       };
 
+      /**
+       * @ngdoc method
+       * @name activateTab
+       * @methodOf newTab.pagePanel
+       * @param tab
+       * @description activates the Tab on the selected Site
+       */
       scope.activateTab = function (tab) {
         $log.debug('trying to activate tab', tab);
         chrome.tabs.update(tab.id, { selected: true });
       };
 
-      scope.closeTab = function (site) {
-        $log.debug('trying to close tab', site);
-        chrome.tabs.remove(site.tab.id, function (result) {
-          $log.debug('Tab Closed', site);
-          delete site.tab;
+      /**
+       * @ngdoc method
+       * @name closeTab
+       * @methodOf newTab.pagePanel
+       * @description Closes the tab
+       */
+      scope.closeTab = function () {
+        $log.debug('trying to close tab', scope.site);
+        chrome.tabs.remove(scope.site.tab.id, function (result) {
+          $log.debug('Tab Closed', result);
+          delete scope.site.tab;
         });
       };
 
+      /**
+       * @ngdoc method
+       * @name openContent
+       * @methodOf newTab.pagePanel
+       * @description activates existing Tabs or else opens Url in active Window/Tab
+       */
+      scope.openContent = function () {
+        if (scope.site.tab) {
+          scope.activateTab(tab);
+        } else {
+          window.location = scope.site.url;
+        }
+      };
+
+      /**
+       * @ngdoc method
+       * @name getTitle
+       * @methodOf newTab.pagePanel
+       * @returns {*}
+       * @description Returns title or edited Version of Title if its empty
+       */
+      scope.getTitle = function () {
+        scope.site.title = scope.site.title.split(' - Google-Suche')[0];
+        return scope.site.title !== '' ? scope.site.title : scope.site.url.split('#')[1];
+      };
+
+      /**
+       * @ngdoc method
+       * @name toggleContext
+       * @methodOf newTab.pagePanel
+       * @description Toggles the activity of a context
+       * @param {object} context
+       */
       scope.toggleContext = function (context) {
         $log.debug('Toggle Context', context);
         $log.debug('Toggle Context', deactivatedTabs);
@@ -104,14 +184,6 @@ angular.module('newTab').directive('pagePanel', function ($log) {
           scope.createTabs(context);
         } else {
           scope.deactivateContext(context);
-        }
-      };
-
-      scope.openContent = function (site) {
-        if (site.tab) {
-          scope.activateTab(tab);
-        } else {
-          window.location = site.url;
         }
       };
     }
