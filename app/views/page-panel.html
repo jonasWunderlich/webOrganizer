@@ -7,6 +7,7 @@
   <div class="panel-head" style="{{getContextColor(site)}}">
     <div class="panel-favicon"><img ng-src="{{'chrome://favicon/'+site.url}}"></div>
     <div class="panel-contexts" ng-if="site.context" ng-click="setBookmark(site)">{{site.context}}</div>
+    <!--<button>Set Context / Bookmark</button>-->
   </div>
 
   <div class="panel-content" style="{{getContextColorIfBookmark(site)}}" ng-click="activateTab(site)" ng-if="isTab(site)">
