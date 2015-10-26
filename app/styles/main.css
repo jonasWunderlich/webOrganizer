@@ -30,7 +30,6 @@ a {
   font-size: 12px;
   width: 100px;
   display: inline-table;
-  margin: 2px;
   box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
   cursor: pointer;
 }
@@ -55,12 +54,17 @@ a {
   box-shadow: none;
 }
 
-/* line 30, _page-panel.scss */
+/* line 27, _page-panel.scss */
+.panel-group {
+  margin-right: 5px;
+}
+
+/* line 33, _page-panel.scss */
 .panel-tab {
   height: 20px;
   position: relative;
 }
-/* line 33, _page-panel.scss */
+/* line 36, _page-panel.scss */
 .panel-tab .panel-tab-ear {
   position: absolute;
   bottom: 0;
@@ -71,46 +75,51 @@ a {
   background: #AD3535;
   cursor: pointer;
 }
-/* line 42, _page-panel.scss */
+/* line 45, _page-panel.scss */
 .panel-tab .panel-tab-ear:hover {
   padding: 1px 0;
   height: 14px;
   transition: height 2ms;
 }
-/* line 49, _page-panel.scss */
+/* line 52, _page-panel.scss */
 .page-panel:hover .panel-tab .panel-tab-ear {
   background: #FFF;
 }
 
-/* line 56, _page-panel.scss */
+/* line 59, _page-panel.scss */
 .panel-head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 60, _page-panel.scss */
+/* line 63, _page-panel.scss */
 .panel-head .panel-favicon {
   display: inline-block;
 }
-/* line 63, _page-panel.scss */
+/* line 66, _page-panel.scss */
 .panel-head .panel-contexts {
   display: inline-block;
 }
-/* line 70, _page-panel.scss */
+/* line 69, _page-panel.scss */
+.bookmark .panel-head {
+  background: #353535;
+  opacity: 0.7;
+}
+/* line 73, _page-panel.scss */
 .tab .panel-head {
   opacity: 1;
 }
-/* line 74, _page-panel.scss */
+/* line 77, _page-panel.scss */
 .page-panel:hover .panel-head {
   opacity: .8 !important;
 }
-/* line 77, _page-panel.scss */
+/* line 80, _page-panel.scss */
 .www_google_d .panel-head, .www_google_c .panel-head {
   background: none;
   position: absolute;
 }
 
-/* line 85, _page-panel.scss */
+/* line 88, _page-panel.scss */
 .panel-content {
   display: block;
   color: #000;
@@ -118,31 +127,31 @@ a {
   min-height: 70px;
   padding: 5px;
 }
-/* line 91, _page-panel.scss */
+/* line 94, _page-panel.scss */
 .developer_ch .panel-content {
   background: black;
   color: white;
 }
-/* line 95, _page-panel.scss */
+/* line 98, _page-panel.scss */
 .www_google_d .panel-content, .www_google_c .panel-content {
   background: url("../images/searchbubble.png") no-repeat;
   background-size: 100% 100%;
   padding: 34px 10px 0 10px;
   font-style: italic;
 }
-/* line 101, _page-panel.scss */
+/* line 104, _page-panel.scss */
 .stackoverflo .panel-content {
   background: #F08C3B;
 }
-/* line 104, _page-panel.scss */
+/* line 107, _page-panel.scss */
 .de_wikipedia .panel-content, .en_wikipedia .panel-content {
   background: #FFF;
 }
-/* line 107, _page-panel.scss */
+/* line 110, _page-panel.scss */
 .pdf .panel-content, .jpg .panel-content, .txt .panel-content, .png .panel-content, .mp3 .panel-content, .mp4 .panel-content, .svg .panel-content, .bmp .panel-content {
   background: yellow;
 }
-/* line 110, _page-panel.scss */
+/* line 113, _page-panel.scss */
 .page-panel:hover .panel-content {
   background: #FFF !important;
   opacity: 1;
@@ -175,7 +184,7 @@ a {
 }
 
 /* line 42, main.scss */
-#panel-content {
+#panel-overview {
   margin-left: 240px;
 }
 
