@@ -14,7 +14,7 @@
 
 <body>
 
-<div id="historycontent" ng-controller="NewTabPageController">
+<div id="history-content" ng-controller="NewTabPageController">
 
     <div class="debug">
       <h3>History</h3>
@@ -34,11 +34,19 @@
             <!--<page-panel site="site" context="{{storedContexts[site.context]['color']}}"></page-panel>-->
           <!--</li>-->
         <!--</ul>-->
-        <ul ng-repeat="(key, value) in allSites | groupBy: 'context'" class="panel-group">
-            <li ng-repeat="site in value">
-              <page-panel site="site" context-color="{{storageData.contextOptions[site.context].color}}"></page-panel>
-            </li>
+
+        <!--<ul ng-repeat="(key, value) in allSites | groupBy: 'context'" class="panel-group">-->
+            <!--<li ng-repeat="site in value">-->
+              <!--<page-panel site="site" context-color="{{storageData.contextOptions[site.context].color}}"></page-panel>-->
+            <!--</li>-->
+        <!--</ul>-->
+
+        <ul ng-repeat="(key, value) in newSites | groupBy: 'context'" class="panel-group">
+          <li ng-repeat="site in value">
+            <page-panel site="site" context-color="{{storageData.contextOptions[site.context].color}}"></page-panel>
+          </li>
         </ul>
+
     </div>
 
 </div>
@@ -69,6 +77,8 @@
 <script src="scripts.babel/app/services/storageService.js"></script>
 <script src="scripts.babel/app/services/browserHistory.js"></script>
 <script src="scripts.babel/app/directives/page-panel.js"></script>
+<script src="scripts.babel/app/model/site.model.js"></script>
+<script src="scripts.babel/app/model/site.service.js"></script>
 <script src="scripts.babel/app/controllers/newTabPage.js"></script>
 
 <!-- build:js scripts/newTab.js -->

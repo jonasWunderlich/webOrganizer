@@ -33,11 +33,12 @@ angular.module('newTab')
          * @returns {string} Background-Style for Context
          */
         scope.getContextColor = function() {
-          if(scope.site.context) {
-            if(scope.site.context.indexOf('neutral') !== 0) {
-              return 'background:'+scope.context;
-            }
-          }
+          return 'background:'+scope.context;
+          //if(scope.site.context) {
+          //  if(scope.site.context.indexOf('neutral') !== 0) {
+          //    return 'background:'+scope.context;
+          //  }
+          //}
         };
 
         /**
@@ -48,11 +49,12 @@ angular.module('newTab')
          * @returns {string} Background-Style for Context if Bookmark
          */
         scope.getContextColorIfBookmark = function() {
-          if(scope.site.context && scope.site.bookmark) {
-            if(scope.site.context.indexOf('neutral') !== 0) {
-              return 'background:'+scope.context;
-            }
-          }
+          return 'background:'+scope.context;
+          //if(scope.site.context && scope.site.bookmark) {
+          //  if(scope.site.context.indexOf('neutral') !== 0) {
+          //    return 'background:'+scope.context;
+          //  }
+          //}
         };
 
         /**

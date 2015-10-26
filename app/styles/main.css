@@ -56,8 +56,9 @@ a {
 
 /* line 27, _page-panel.scss */
 .panel-group {
-  margin-right: 5px;
 }
+
+ul.panel-group.ng-scope {}
 
 /* line 33, _page-panel.scss */
 .panel-tab {

@@ -8,7 +8,7 @@
  */
 
 angular.module('newTab')
-  .controller('NewTabPageController', function ($scope, $log, BrowserHistory, StorageService) {
+  .controller('NewTabPageController', function ($scope, $log, BrowserHistory, StorageService, sitesManager) {
 
     var deactivatedTabs = [];
 
@@ -19,21 +19,21 @@ angular.module('newTab')
      * @description Write all the Data in the scope
      */
     var getData = function() {
-      BrowserHistory.getProcessedHistory().then(function(d) {
-        $scope.allSites = d.reverse();
-      });
-      BrowserHistory.getBookmarks().then(function(d) {
-        $scope.bookmarks = d;
-      });
-      BrowserHistory.getOpenTabs().then(function(d) {
-        $scope.openedTabs = d;
-      });
-      StorageService.getStorageBytesInUse().then(function(d) {
-        $scope.storageBytesInUse = d;
-      });
-      StorageService.getStorage().then(function(d) {
-        $scope.storageData = d;
-      });
+      //BrowserHistory.getProcessedHistory().then(function(d) {
+      //  $scope.allSites = d.reverse();
+      //});
+      //BrowserHistory.getBookmarks().then(function(d) {
+      //  $scope.bookmarks = d;
+      //});
+      //BrowserHistory.getOpenTabs().then(function(d) {
+      //  $scope.openedTabs = d;
+      //});
+      //StorageService.getStorageBytesInUse().then(function(d) {
+      //  $scope.storageBytesInUse = d;
+      //});
+      //StorageService.getStorage().then(function(d) {
+      //  $scope.storageData = d;
+      //});
     };
 
     /**
@@ -96,6 +96,14 @@ angular.module('newTab')
     };
 
     _init();
+
+
+
+
+
+    sitesManager.loadAllSites().then(function(sites) {
+      $scope.newSites = sites;
+    });
 
 
 

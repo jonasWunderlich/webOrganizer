@@ -18,6 +18,7 @@ angular.module('newTab')
      * @returns {promise}
      */
     var getHistoryWithVisits = function() {
+
       var deferredHistory = $q.defer();
       ChromeApi.getStorage('tabConnections')
         .then(function(tabconnections) {
@@ -25,7 +26,7 @@ angular.module('newTab')
             var i = 0;
             sites.reverse().forEach(function(site) {
               ChromeApi.getVisits(site).then(function(visits){
-                //TODO: reduce amout of visitItems but (not with slice :-P)
+                //TODO: reduce amout of visitItems but (not with slice)
                 //site.visits = visits.slice(0, configuration.getMaxVisits());
                 site.visits = visits;
                 site.visits.forEach(function(visit) {
@@ -53,6 +54,8 @@ angular.module('newTab')
           })
         });
       return deferredHistory.promise;
+
+
     };
 
     /**
@@ -83,16 +86,10 @@ angular.module('newTab')
         var domainIndex = 0;
         var domainCollector = {};
         var indexNeutralContext = 0;
+        var lastCheckedSite = {};
 
         // I: First Loop:
         history.forEach(function(site) {
-
-          /**
-           * Collect Subset of URLs for linking Pages that have no referringVisitId
-           */
-          domainCollector[domainIndex] = site.url.substr(0, 20);
-          domainIndex++;
-          //$log.debug('DomainCollector',domainCollector);
 
           // I.A  Set Bookmark & Context if found
           chrome.bookmarks.search({url: site.url}, function(foundBookmark) {
@@ -147,9 +144,7 @@ angular.module('newTab')
               });
 
 
-              if(!site.context) {
-                //console.log(site.url);
-              }
+
 
 
 
@@ -175,7 +170,39 @@ angular.module('newTab')
           });
 
 
+          if(!site.context) {
+
+            /**
+             * Collect Subset of URLs for linking Pages that have no referringVisitId
+             */
+
+            if(domainIndex > 0 && site.url.substr(0, 20) === lastCheckedSite.url.substr(0, 20)) {
+
+              if(lastCheckedSite.context) {
+                if (site.context) {
+                  //TODO: If site.context exists what happens to this context?
+                }
+                site.context = lastCheckedSite.context;
+              } else {
+                if (site.context) {
+                  lastCheckedSite.context = site.context;
+                  //TODO: Check if this has any implications
+                } else {
+                  lastCheckedSite.context = site.context = 'neutral-'+indexNeutralContext;
+                  indexNeutralContext++;
+                  //TODO: Check if this has any implications
+                }
+              }
+            }
+            domainIndex++;
+            lastCheckedSite = site;
+            // TODO: Don't just check the Site before - but all the sites
+            domainCollector[domainIndex] = site.url.substr(0, 20);
+          }
+
         });
+
+
 
 
       });
