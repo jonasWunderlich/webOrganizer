@@ -55,7 +55,6 @@ angular.module('newTab')
         });
       return deferredHistory.promise;
 
-
     };
 
     /**

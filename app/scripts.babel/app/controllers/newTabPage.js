@@ -19,21 +19,27 @@ angular.module('newTab')
      * @description Write all the Data in the scope
      */
     var getData = function() {
-      //BrowserHistory.getProcessedHistory().then(function(d) {
-      //  $scope.allSites = d.reverse();
-      //});
-      //BrowserHistory.getBookmarks().then(function(d) {
-      //  $scope.bookmarks = d;
-      //});
-      //BrowserHistory.getOpenTabs().then(function(d) {
-      //  $scope.openedTabs = d;
-      //});
-      //StorageService.getStorageBytesInUse().then(function(d) {
-      //  $scope.storageBytesInUse = d;
-      //});
-      //StorageService.getStorage().then(function(d) {
-      //  $scope.storageData = d;
-      //});
+
+      sitesManager.loadAllSitesEnhanced().then(function(sites) {
+        $scope.newSites = sites.reverse();
+      });
+
+
+      BrowserHistory.getProcessedHistory().then(function(d) {
+        $scope.allSites = d.reverse();
+      });
+      BrowserHistory.getBookmarks().then(function(d) {
+        $scope.bookmarks = d;
+      });
+      BrowserHistory.getOpenTabs().then(function(d) {
+        $scope.openedTabs = d;
+      });
+      StorageService.getStorageBytesInUse().then(function(d) {
+        $scope.storageBytesInUse = d;
+      });
+      StorageService.getStorage().then(function(d) {
+        $scope.storageData = d;
+      });
     };
 
     /**
@@ -101,9 +107,6 @@ angular.module('newTab')
 
 
 
-    sitesManager.loadAllSites().then(function(sites) {
-      $scope.newSites = sites;
-    });
 
 
 

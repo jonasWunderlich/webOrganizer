@@ -10,7 +10,7 @@
  */
 
 angular.module('newTab')
-  .factory('SiteModel', function ($log, $q) {
+  .factory('Site', function ($log, $q) {
 
 
     function Site(dataObj) {
@@ -48,6 +48,12 @@ angular.module('newTab')
       });
       return deferred.promise();
     };
+
+
+
+
+
+
 
     /**
      * @ngdoc method
@@ -88,6 +94,7 @@ angular.module('newTab')
       }
       return _classes;
     };
+
 
     /**
      * @ngdoc method

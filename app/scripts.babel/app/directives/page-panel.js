@@ -127,9 +127,9 @@ angular.module('newTab')
          * @param tab
          * @description activates the Tab on the selected Site
          */
-        scope.activateTab = function(tab) {
-          $log.debug('trying to activate tab', tab);
-          chrome.tabs.update(tab.id, {selected: true});
+        scope.activateTab = function(site) {
+          $log.debug('trying to activate tab', site.tab);
+          chrome.tabs.update(site.tab.id, {selected: true});
         };
 
         /**
