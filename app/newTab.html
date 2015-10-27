@@ -43,7 +43,7 @@
 
         <ul ng-repeat="(key, value) in newSites | groupBy: 'context'" class="panel-group">
           <li ng-repeat="site in value">
-            <page-panel site="site" context-color="{{storageData.contextOptions[site.context].color}}"></page-panel>
+            <page-panel site="site"></page-panel>
           </li>
         </ul>
 

@@ -20,10 +20,10 @@ angular.module('newTab')
       replace: true,
       templateUrl: 'views/page-panel.html',
       scope: {
-        'site':'=',
-        'context:':'='
+        'site':'='
       },
       link: function(scope, element, attrs) {
+
 
         /**
          * @ngdoc method
@@ -33,12 +33,11 @@ angular.module('newTab')
          * @returns {string} Background-Style for Context
          */
         scope.getContextColor = function() {
-          return 'background:'+scope.context;
-          //if(scope.site.context) {
-          //  if(scope.site.context.indexOf('neutral') !== 0) {
-          //    return 'background:'+scope.context;
-          //  }
-          //}
+          if(typeof scope.site.context !== 'undefined' ) {
+            if(scope.site.context.indexOf('neutral') !== 0) {
+              return 'background:'+scope.$parent.contextOptions[scope.site.context].color;
+            }
+          }
         };
 
         /**
@@ -49,10 +48,9 @@ angular.module('newTab')
          * @returns {string} Background-Style for Context if Bookmark
          */
         scope.getContextColorIfBookmark = function() {
-          return 'background:'+scope.context;
-          //if(scope.site.context && scope.site.bookmark) {
+          //if(typeof scope.site.context !== 'undefined' && scope.site.bookmark) {
           //  if(scope.site.context.indexOf('neutral') !== 0) {
-          //    return 'background:'+scope.context;
+          //    return 'background:'+scope.$parent.contextOptions[scope.site.context].color;
           //  }
           //}
         };
@@ -81,7 +79,7 @@ angular.module('newTab')
           _classes += (scope.site.tab) ? 'tab ' : '';
           // sets substring as class
           _classes += scope.site.url.substr(scope.site.url.indexOf('://')+3,12).split('.').join('_')+' ';
-          // set file ending as class
+          // sets file ending as class
           _classes += (scope.site.url.substr(-4,1) === '.') ? scope.site.url.substr(-3,3)+' ' : '';
           switch (scope.site.visitCount > 1) {
             case (scope.site.visitCount < 5):
