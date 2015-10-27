@@ -21,11 +21,12 @@ angular.module('newTab')
       var deferred = $q.defer();
       chrome.bookmarks.getTree(function(response) {
         if (response) {
-          $log.debug('Bookmark-Tree data retrieved:', response[0].children[0].children);
-          deferred.resolve(response[0].children[0].children)
+          $log.debug('Bookmark-Tree data retrieved:', response);
+          //deferred.resolve(response[0].children[0].children);
+          deferred.resolve(response);
         } else {
           $log.debug('Unable to retrieve Bookmark-Tree data', response);
-          deferred.reject('unable to retrieve Bookmark-Tree data')
+          deferred.reject('unable to retrieve Bookmark-Tree data');
         }
       });
       return deferred.promise;
