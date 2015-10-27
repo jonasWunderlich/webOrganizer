@@ -6,6 +6,7 @@ dist
 app/bower_components
 app/scripts
 app/styles/*.map
+app/styles/*.css
 test/bower_components
 package
 scripts/*.js

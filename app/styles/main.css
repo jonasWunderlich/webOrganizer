@@ -30,42 +30,41 @@ a {
   font-size: 12px;
   width: 100px;
   display: inline-table;
-  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
   cursor: pointer;
+  margin-top: 5px;
 }
-/* line 14, _page-panel.scss */
+/* line 15, _page-panel.scss */
 .page-panel.visits-1 {
   width: 110px;
 }
-/* line 15, _page-panel.scss */
+/* line 16, _page-panel.scss */
 .page-panel.visits-2 {
   width: 120px;
 }
-/* line 16, _page-panel.scss */
+/* line 17, _page-panel.scss */
 .page-panel.visits-3 {
   width: 200px;
 }
-/* line 17, _page-panel.scss */
+/* line 18, _page-panel.scss */
 .page-panel.same {
   margin-left: -5px;
 }
-/* line 21, _page-panel.scss */
+/* line 22, _page-panel.scss */
 .page-panel.www_google_d, .page-panel.www_google_c {
   box-shadow: none;
 }
 
-/* line 27, _page-panel.scss */
+/* line 28, _page-panel.scss */
 .panel-group {
+  margin-right: 5px;
 }
 
-ul.panel-group.ng-scope {}
-
-/* line 33, _page-panel.scss */
+/* line 34, _page-panel.scss */
 .panel-tab {
   height: 20px;
   position: relative;
 }
-/* line 36, _page-panel.scss */
+/* line 37, _page-panel.scss */
 .panel-tab .panel-tab-ear {
   position: absolute;
   bottom: 0;
@@ -76,51 +75,62 @@ ul.panel-group.ng-scope {}
   background: #AD3535;
   cursor: pointer;
 }
-/* line 45, _page-panel.scss */
+/* line 46, _page-panel.scss */
 .panel-tab .panel-tab-ear:hover {
   padding: 1px 0;
   height: 14px;
   transition: height 2ms;
 }
-/* line 52, _page-panel.scss */
+/* line 53, _page-panel.scss */
 .page-panel:hover .panel-tab .panel-tab-ear {
   background: #FFF;
 }
 
-/* line 59, _page-panel.scss */
+/* line 60, _page-panel.scss */
 .panel-head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 63, _page-panel.scss */
+/* line 64, _page-panel.scss */
 .panel-head .panel-favicon {
   display: inline-block;
 }
-/* line 66, _page-panel.scss */
+/* line 67, _page-panel.scss */
 .panel-head .panel-contexts {
   display: inline-block;
+  border: 2px solid #FFF;
+  height: 15px;
+  /* width: 15px; */
+  /* vertical-align: top; */
+  background: #FFF;
+  opacity: .5;
+  float: right;
 }
-/* line 69, _page-panel.scss */
+/* line 76, _page-panel.scss */
+.panel-head .panel-contexts:hover {
+  opacity: 1;
+}
+/* line 80, _page-panel.scss */
 .bookmark .panel-head {
   background: #353535;
   opacity: 0.7;
 }
-/* line 73, _page-panel.scss */
+/* line 84, _page-panel.scss */
 .tab .panel-head {
   opacity: 1;
 }
-/* line 77, _page-panel.scss */
+/* line 88, _page-panel.scss */
 .page-panel:hover .panel-head {
   opacity: .8 !important;
 }
-/* line 80, _page-panel.scss */
+/* line 91, _page-panel.scss */
 .www_google_d .panel-head, .www_google_c .panel-head {
   background: none;
   position: absolute;
 }
 
-/* line 88, _page-panel.scss */
+/* line 99, _page-panel.scss */
 .panel-content {
   display: block;
   color: #000;
@@ -128,31 +138,31 @@ ul.panel-group.ng-scope {}
   min-height: 70px;
   padding: 5px;
 }
-/* line 94, _page-panel.scss */
+/* line 105, _page-panel.scss */
 .developer_ch .panel-content {
   background: black;
   color: white;
 }
-/* line 98, _page-panel.scss */
+/* line 109, _page-panel.scss */
 .www_google_d .panel-content, .www_google_c .panel-content {
   background: url("../images/searchbubble.png") no-repeat;
   background-size: 100% 100%;
   padding: 34px 10px 0 10px;
   font-style: italic;
 }
-/* line 104, _page-panel.scss */
+/* line 115, _page-panel.scss */
 .stackoverflo .panel-content {
   background: #F08C3B;
 }
-/* line 107, _page-panel.scss */
+/* line 118, _page-panel.scss */
 .de_wikipedia .panel-content, .en_wikipedia .panel-content {
   background: #FFF;
 }
-/* line 110, _page-panel.scss */
+/* line 121, _page-panel.scss */
 .pdf .panel-content, .jpg .panel-content, .txt .panel-content, .png .panel-content, .mp3 .panel-content, .mp4 .panel-content, .svg .panel-content, .bmp .panel-content {
   background: yellow;
 }
-/* line 113, _page-panel.scss */
+/* line 124, _page-panel.scss */
 .page-panel:hover .panel-content {
   background: #FFF !important;
   opacity: 1;
