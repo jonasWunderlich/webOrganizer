@@ -4,8 +4,9 @@
   width: 100px;
   display: inline-table;
 //  margin: 2px;
-  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
+//  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
   cursor: pointer;
+  margin-top: 5px;
 
   //  Playground for background-image out of favicon
   //  background-size: 300px 300px;
@@ -65,6 +66,16 @@
   }
   .panel-contexts {
     display: inline-block;
+    border: 2px solid #FFF;
+    height: 15px;
+    /* width: 15px; */
+    /* vertical-align: top; */
+    background: #FFF;
+    opacity: .5;
+    float: right;
+    &:hover {
+      opacity: 1;
+    }
   }
   .bookmark & {
     background: #353535;
