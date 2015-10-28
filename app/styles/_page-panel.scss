@@ -44,6 +44,9 @@ $panel-overlap: 40px;
   margin: 25px (0px+$panel-overlap) 0px 50px;
   padding: 0 10px;
   height: 104px;
+  .panel-group:first-child & {
+    margin-left: 0;
+  }
   &:before {
     content: "{";
     position: absolute;
@@ -53,7 +56,6 @@ $panel-overlap: 40px;
     color: #FFF;
     opacity: .2;
   }
-
   .context-name {
     margin: 10px 0;
     text-align: center;
@@ -72,10 +74,6 @@ $panel-overlap: 40px;
       background: #FFF;
     }
   }
-}
-
-.panel-group:first-child .context-options {
-  margin-left: 0;
 }
 
 
@@ -116,25 +114,19 @@ $panel-overlap: 40px;
     display: inline-block;
     border: 2px solid #FFF;
     height: 15px;
-    /* width: 15px; */
-    /* vertical-align: top; */
     background: #FFF;
-    opacity: .5;
+//    opacity: .5;
     float: right;
     &:hover {
       opacity: 1;
     }
   }
   .bookmark & {
-    //background: #353535;
-    //opacity: 0.1;
   }
   .tab & {
-    //    background: yellow;
     opacity: 1;
   }
   .page-panel:hover & {
-    opacity: .8 !important;
   }
   .www_google_d &, .www_google_c &{
     background: none;
