@@ -47,7 +47,9 @@ angular.module('newTab')
       //TODO: Maybe this can be put into the getStoredContext-method later
       var _contextOptions = setupContextOptions(bookmarks);
       //TODO: This needs to be put as a function to the ChromeApi that returns a promise
-      chrome.storage.local.set({'contextOptions': _contextOptions}, function() {});
+      chrome.storage.local.set({'contextOptions': _contextOptions}, function(result) {
+        $log.debug('contextOptions written to Storage', result)
+      });
     };
 
     /**
@@ -62,8 +64,12 @@ angular.module('newTab')
       var bookmarkFolder = _.filter(data, 'children');
       var result = {};
       _.each(bookmarkFolder, function(item) {
+        var childrenOfFolder = _.filter(item.children,function(result){
+          return typeof result.children === 'undefined';
+        });
         var entry = _.omit(item, 'id', 'dateGroupModified', 'dateAdded', 'children');
         entry.color = randomColor();
+        entry.children = childrenOfFolder;
         result[item.id] = entry;
         // TODO: Maybe its better to filter empty objects before the recursion
         _.merge(result, setupContextOptions(item.children))
@@ -72,11 +78,56 @@ angular.module('newTab')
     };
 
 
+    /**
+     * @ngdoc method
+     * @name buildStoredContextUrls
+     * @methodOf newTab.StorageService
+     * @description Builds Array that references the Urls of the Bookmarks to its context
+     * @returns {promise}
+     */
+    var buildStoredContextUrls = function() {
+      var deferred = $q.defer();
+      var _storedContextUrls = {};
+      var _lastContextIndex = '';
+
+      getStoredContexts().then(function(storedContext) {
+
+        _.each(storedContext, function(result) {
+
+          _.each(result.children, function(result2) {
+
+            var _subStr = result2.url.substr(0,17);
+            if(typeof _storedContextUrls[_subStr] === 'undefined') {
+              _storedContextUrls[_subStr] = result2.parentId;
+            } else if(_lastContextIndex !== result2.parentId) {
+              _storedContextUrls[_subStr] = _storedContextUrls[_subStr]+','+result2.parentId;
+            }
+            _lastContextIndex = result2.parentId;
+          });
+        });
+
+        chrome.storage.local.set({'_storedContextUrls': _storedContextUrls}, function() {
+          $log.debug('stored _storedContextUrls');
+          deferred.resolve(_storedContextUrls);
+        });
+
+        //$log.debug('Try filtering Children of Bookmarks in Context',_filter);
+        //var _filter = _.each(_contextOptions, function(result){
+        //  _.filter(result.children, function(result2){
+        //    return result2.url.substr(0,20) === 'http://www.vr-bank-m';
+        //  });
+        //});
+      });
+      return deferred.promise;
+    };
+
+
     return {
       getStorageBytesInUse: ChromeApi.getStorageBytesInUse,
       getStorage: ChromeApi.getStorage,
       getStoredConfiguration: ChromeApi.getStoredConfiguration,
-      getStoredContexts: getStoredContexts
+      getStoredContexts: getStoredContexts,
+      buildStoredContextUrls: buildStoredContextUrls
     };
 
   });

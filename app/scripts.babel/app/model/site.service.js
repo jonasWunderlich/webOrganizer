@@ -74,75 +74,183 @@ angular.module('newTab')
       return deferredHistory.promise;
     },
 
+
+
+
+
+
+
+
     /* Use this function in order to get instances of all the sites */
     loadAllSitesEnhanced: function() {
 
       var scope = this;
-      var deferredHistory = $q.defer();
+      var deferred = $q.defer();
 
-      ChromeApi.getStorage('tabConnections')
-        .then(function(tabconnections) {
-          ChromeApi.getHistory().then(function(sites) {
-
-            var sitesToRetrieve = [];
-
-            sites.reverse().forEach(function(siteData) {
+      var domainIndex = 0;
+      var domainCollector = {};
+      var indexNeutralContext = 0;
+      var lastCheckedSite = {};
 
 
-              // Set Bookmark & Bookmark-Context if found
-              chrome.bookmarks.search({url: siteData.url}, function(foundBookmark) {
-                //TODO (optional): length > 2 would mean Site is more than once bookmarked
-                if (foundBookmark.length > 0) {
-                  siteData.context = foundBookmark[0]['parentId'];
-                  siteData.bookmark = foundBookmark[0]['id'];
-                  // more options are: alternative Title, Date added
-                }
+      $q.all([
+        ChromeApi.getHistory(),
+        ChromeApi.getBookmarks(),
+        ChromeApi.getStorage(),
+        ChromeApi.getOpenTabs()
+      ]).then(function(data) {
 
-                // Set Tabs if found
-                chrome.tabs.query({url: siteData.url}, function (foundTab) {
-                  if (foundTab.length > 0) {
-                    siteData.tab = foundTab[0];
+        var sites = data[0];
+        var bookmarks = data[1];
+        var storage = data[2];
+        var tabs = data[3];
+
+
+        var sitesToRetrieve = [];
+
+        sites.reverse().forEach(function (siteData) {
+
+
+
+          /**
+           * Set Bookmark & Bookmark-Context if found
+           */
+          chrome.bookmarks.search({url: siteData.url}, function (foundBookmark) {
+            if (foundBookmark.length > 0) {
+              siteData.context = foundBookmark[0]['parentId'];
+              siteData.bookmark = foundBookmark[0]['id'];
+              // more options are: alternative Title, Date added
+              if (foundBookmark.length > 1) {
+                //TODO (optional): length > 1 would mean Site is more than once bookmarked
+                $log.debug('duplicate bookmark found', foundBookmark);
+              }
+            }
+            else {
+              if(siteData.url.substr(0,28) === 'https://www.google.de/search') {
+                lastCheckedSite.context = siteData.context = 'neutral-' + indexNeutralContext;
+                indexNeutralContext++;
+              } else {
+                var _subStringOfSiteDataUrl = siteData.url.substr(0,17);
+                var _storedContext = storage._storedContextUrls[_subStringOfSiteDataUrl];
+                $log.debug("Set found Context", storage._storedContextUrls[_subStringOfSiteDataUrl]);
+                siteData.context = _storedContext;
+              }
+
+            }
+
+
+            /**
+             * Set Tabs if found
+             */
+            chrome.tabs.query({url: siteData.url}, function (foundTab) {
+              if (foundTab.length > 0) {
+                siteData.tab = foundTab[0];
+              }
+
+              //TODO: Check this Functionality
+              //ChromeApi.getVisits(siteData).then(function(visits) {
+              //  //TODO: reduce amout of visitItems but (not with slice)
+              //  //siteData.visits = visits.slice(0, configuration.getMaxVisits());
+              //  siteData.visits = visits;
+              //  siteData.visits.forEach(function(visit) {
+              //
+              //    if(visit.referringVisitId === "0" && visit.transition === "link") {
+              //      //TODO: find a way to set the still missing references (Find a PATTERN!)
+              //      if(tabconnections[visit.visitId]) {
+              //        //$log.debug('found tab reference:', tabconnections[visit.visitId]);
+              //        //$log.debug('for', siteData.url);
+              //        visit.referringVisitId = tabconnections[visit.visitId];
+              //        siteData.refByNewTab = true;
+              //      }
+              //    }
+              //    if(visit.transition === "reload") {
+              //      siteData.reload = true;
+              //      //TODO: find the orginal source of reloaded visits
+              //    }
+              //  });
+              //});
+
+
+
+              if (!siteData.context) {
+
+                /**
+                 * Collect Subset of URLs for linking Pages that have no referringVisitId
+                 */
+
+                if (domainIndex > 0 && siteData.url.substr(0, 20) === lastCheckedSite.url.substr(0, 20)) {
+
+                  if (lastCheckedSite.context) {
+                    if (siteData.context) {
+                      //TODO: If siteData.context exists what happens to this context?
+                    }
+                    siteData.context = lastCheckedSite.context;
+                  } else {
+                    if (siteData.context) {
+                      lastCheckedSite.context = siteData.context;
+                      //TODO: Check if this has any implications
+                    } else {
+                      lastCheckedSite.context = siteData.context = 'neutral-' + indexNeutralContext;
+                      indexNeutralContext++;
+                      //TODO: Check if this has any implications
+                    }
                   }
+                }
+                domainIndex++;
+                lastCheckedSite = siteData;
+                // TODO: Don't just check the Site before - but all the sites
+                domainCollector[domainIndex] = siteData.url.substr(0, 20);
+              }
 
-                  //TODO: Check this Functionality
-                  //ChromeApi.getVisits(siteData).then(function(visits) {
-                  //  //TODO: reduce amout of visitItems but (not with slice)
-                  //  //siteData.visits = visits.slice(0, configuration.getMaxVisits());
-                  //  siteData.visits = visits;
-                  //  siteData.visits.forEach(function(visit) {
-                  //
-                  //    if(visit.referringVisitId === "0" && visit.transition === "link") {
-                  //      //TODO: find a way to set the still missing references (Find a PATTERN!)
-                  //      if(tabconnections[visit.visitId]) {
-                  //        //$log.debug('found tab reference:', tabconnections[visit.visitId]);
-                  //        //$log.debug('for', siteData.url);
-                  //        visit.referringVisitId = tabconnections[visit.visitId];
-                  //        siteData.refByNewTab = true;
-                  //      }
-                  //    }
-                  //    if(visit.transition === "reload") {
-                  //      siteData.reload = true;
-                  //      //TODO: find the orginal source of reloaded visits
-                  //    }
-                  //  });
-                  //});
-
-                  var site = scope._retrieveInstance(siteData.id, siteData);
-                  sitesToRetrieve.push(site);
-
-                  deferredHistory.resolve(sites);
-
-                });
-              });
+              var site = scope._retrieveInstance(siteData.id, siteData);
+              sitesToRetrieve.push(site);
 
 
+              var result = _.chain(sites)
+                .groupBy("context")
+                .pairs()
+                .map(function(currentItem) {
+                  return _.object(_.zip(["context", "sites"], currentItem));
+                })
+                .value();
+              console.log(result);
+
+              deferred.resolve(result);
+              //deferred.resolve(sites);
 
             });
-
-          })
+          });
         });
-      return deferredHistory.promise;
+      });
+
+      // 2. Durchlauf (Iteration mit Tiefe n)
+      // Seiten ohne Kontext(geht das noch nach dem 1. Durchlauf)
+
+      // Prüfen ob Kontexte zusammenpassen
+      // Gleicher Ordner
+      // Zeitlicher Abstand ~vorsichtig genießen
+      // Vereinfachungen durch URL-Ähnlichkeit
+
+      // TODO: special filters for special sites
+      // Schnittstelle für Ausnahmeregelungen einplanen:
+      // Facebook, GMail, Google, Stackoverflow, GoogleDrive, Drupal, Wordpress etc.
+
+      // TODO: filter unwanted sites / urls
+
+      return deferred.promise;
     },
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*  This function is useful when we got somehow the site data and we wish to store it or update the pool and get a site instance in return */
     setSite: function(siteData) {

@@ -48,11 +48,11 @@ angular.module('newTab')
          * @returns {string} Background-Style for Context if Bookmark
          */
         scope.getContextColorIfBookmark = function() {
-          //if(typeof scope.site.context !== 'undefined' && scope.site.bookmark) {
-          //  if(scope.site.context.indexOf('neutral') !== 0) {
-          //    return 'background:'+scope.$parent.contextOptions[scope.site.context].color;
-          //  }
-          //}
+          if(typeof scope.site.context !== 'undefined' && scope.site.bookmark) {
+            if(scope.site.context.indexOf('neutral') !== 0) {
+              return 'background:'+scope.$parent.contextOptions[scope.site.context].color;
+            }
+          }
         };
 
         /**

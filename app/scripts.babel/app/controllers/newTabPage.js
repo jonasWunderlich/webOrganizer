@@ -8,7 +8,7 @@
  */
 
 angular.module('newTab')
-  .controller('NewTabPageController', function ($scope, $log, BrowserHistory, StorageService, sitesManager) {
+  .controller('NewTabPageController', function ($scope, $log, $window, BrowserHistory, StorageService, sitesManager) {
 
     var deactivatedTabs = [];
 
@@ -20,9 +20,7 @@ angular.module('newTab')
      */
     var getData = function() {
 
-      sitesManager.loadAllSitesEnhanced().then(function(sites) {
-        $scope.newSites = sites.reverse();
-      });
+
 
 
       BrowserHistory.getProcessedHistory().then(function(d) {
@@ -39,6 +37,15 @@ angular.module('newTab')
       });
       StorageService.getStorage().then(function(d) {
         $scope.storageData = d;
+      });
+      StorageService.buildStoredContextUrls().then(function(d) {
+        $scope.storageContextUrls = d;
+      });
+      StorageService.getStoredContexts().then(function (d) {
+        $scope.contextOptions = d;
+        sitesManager.loadAllSitesEnhanced().then(function(sites) {
+          $scope.newSites = sites.reverse();
+        });
       });
     };
 
@@ -89,6 +96,10 @@ angular.module('newTab')
         deactivatedTabs[context] = removeTabs;
         $log.debug('Tabs removed',callback);
       });
+    };
+
+    $scope.reload = function() {
+      $window.location.reload();
     };
 
     /**

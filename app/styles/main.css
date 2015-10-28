@@ -24,47 +24,103 @@ a {
   color: #000;
 }
 
-/* line 1, _page-panel.scss */
+/* line 3, _page-panel.scss */
 .page-panel {
   float: left;
   font-size: 12px;
   width: 100px;
   display: inline-table;
+  margin-left: -40px;
+  box-shadow: -20px 19px 12px -19px rgba(0, 0, 0, 0.22);
   cursor: pointer;
   margin-top: 5px;
 }
-/* line 15, _page-panel.scss */
+/* line 17, _page-panel.scss */
 .page-panel.visits-1 {
   width: 110px;
 }
-/* line 16, _page-panel.scss */
+/* line 18, _page-panel.scss */
 .page-panel.visits-2 {
   width: 120px;
 }
-/* line 17, _page-panel.scss */
+/* line 19, _page-panel.scss */
 .page-panel.visits-3 {
   width: 200px;
 }
-/* line 18, _page-panel.scss */
+/* line 20, _page-panel.scss */
 .page-panel.same {
   margin-left: -5px;
 }
-/* line 22, _page-panel.scss */
+/* line 24, _page-panel.scss */
 .page-panel.www_google_d, .page-panel.www_google_c {
   box-shadow: none;
 }
-
 /* line 28, _page-panel.scss */
+.page-panel:hover {
+  z-index: 5;
+  position: relative;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  transition: margin .2s ease-out, box-shadow .2s ease-out;
+  box-shadow: 0px 22px 52px -18px black;
+}
+
+/* line 38, _page-panel.scss */
 .panel-group {
   margin-right: 5px;
 }
 
-/* line 34, _page-panel.scss */
+/* line 42, _page-panel.scss */
+.context-options {
+  float: left;
+  margin: 25px 40px 0px 50px;
+  padding: 0 10px;
+  height: 104px;
+}
+/* line 47, _page-panel.scss */
+.context-options:before {
+  content: "{";
+  position: absolute;
+  font-size: 130px;
+  margin-top: -40px;
+  margin-left: -40px;
+  color: #FFF;
+  opacity: .2;
+}
+/* line 57, _page-panel.scss */
+.context-options .context-name {
+  margin: 10px 0;
+  text-align: center;
+}
+/* line 61, _page-panel.scss */
+.context-options .context-info {
+  margin: 10px 0;
+  text-align: center;
+}
+/* line 65, _page-panel.scss */
+.context-options .context-toggle {
+  background: #000;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  margin: 10px auto;
+}
+/* line 71, _page-panel.scss */
+.context-options .context-toggle:hover {
+  background: #FFF;
+}
+
+/* line 77, _page-panel.scss */
+.panel-group:first-child .context-options {
+  margin-left: 0;
+}
+
+/* line 82, _page-panel.scss */
 .panel-tab {
   height: 20px;
   position: relative;
 }
-/* line 37, _page-panel.scss */
+/* line 85, _page-panel.scss */
 .panel-tab .panel-tab-ear {
   position: absolute;
   bottom: 0;
@@ -75,28 +131,28 @@ a {
   background: #AD3535;
   cursor: pointer;
 }
-/* line 46, _page-panel.scss */
+/* line 94, _page-panel.scss */
 .panel-tab .panel-tab-ear:hover {
   padding: 1px 0;
   height: 14px;
   transition: height 2ms;
 }
-/* line 53, _page-panel.scss */
+/* line 101, _page-panel.scss */
 .page-panel:hover .panel-tab .panel-tab-ear {
   background: #FFF;
 }
 
-/* line 60, _page-panel.scss */
+/* line 108, _page-panel.scss */
 .panel-head {
   background: #E9E9E9;
   padding: 4px;
   height: 16px;
 }
-/* line 64, _page-panel.scss */
+/* line 112, _page-panel.scss */
 .panel-head .panel-favicon {
   display: inline-block;
 }
-/* line 67, _page-panel.scss */
+/* line 115, _page-panel.scss */
 .panel-head .panel-contexts {
   display: inline-block;
   border: 2px solid #FFF;
@@ -107,62 +163,57 @@ a {
   opacity: .5;
   float: right;
 }
-/* line 76, _page-panel.scss */
+/* line 124, _page-panel.scss */
 .panel-head .panel-contexts:hover {
   opacity: 1;
 }
-/* line 80, _page-panel.scss */
-.bookmark .panel-head {
-  background: #353535;
-  opacity: 0.7;
-}
-/* line 84, _page-panel.scss */
+/* line 132, _page-panel.scss */
 .tab .panel-head {
   opacity: 1;
 }
-/* line 88, _page-panel.scss */
+/* line 136, _page-panel.scss */
 .page-panel:hover .panel-head {
   opacity: .8 !important;
 }
-/* line 91, _page-panel.scss */
+/* line 139, _page-panel.scss */
 .www_google_d .panel-head, .www_google_c .panel-head {
   background: none;
   position: absolute;
 }
 
-/* line 99, _page-panel.scss */
+/* line 147, _page-panel.scss */
 .panel-content {
   display: block;
   color: #000;
-  background: rgba(255, 255, 255, 0.77);
+  background: #FFF;
   min-height: 70px;
   padding: 5px;
 }
-/* line 105, _page-panel.scss */
+/* line 154, _page-panel.scss */
 .developer_ch .panel-content {
   background: black;
   color: white;
 }
-/* line 109, _page-panel.scss */
+/* line 158, _page-panel.scss */
 .www_google_d .panel-content, .www_google_c .panel-content {
   background: url("../images/searchbubble.png") no-repeat;
   background-size: 100% 100%;
   padding: 34px 10px 0 10px;
   font-style: italic;
 }
-/* line 115, _page-panel.scss */
+/* line 164, _page-panel.scss */
 .stackoverflo .panel-content {
   background: #F08C3B;
 }
-/* line 118, _page-panel.scss */
+/* line 167, _page-panel.scss */
 .de_wikipedia .panel-content, .en_wikipedia .panel-content {
   background: #FFF;
 }
-/* line 121, _page-panel.scss */
+/* line 170, _page-panel.scss */
 .pdf .panel-content, .jpg .panel-content, .txt .panel-content, .png .panel-content, .mp3 .panel-content, .mp4 .panel-content, .svg .panel-content, .bmp .panel-content {
   background: yellow;
 }
-/* line 124, _page-panel.scss */
+/* line 173, _page-panel.scss */
 .page-panel:hover .panel-content {
   background: #FFF !important;
   opacity: 1;

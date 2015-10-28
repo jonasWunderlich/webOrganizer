@@ -17,6 +17,7 @@
 <div id="history-content" ng-controller="NewTabPageController">
 
     <div class="debug">
+      <button ng-click="reload()">refresh</button>
       <h3>History</h3>
         <pre>{{allSites | json}}</pre>
         <h3>Bookmarks</h3>
@@ -29,23 +30,15 @@
     </div>
 
     <div id="panel-overview">
-        <!--<ul>-->
-          <!--<li ng-repeat="site in allSites | orderBy:'context'">-->
-            <!--<page-panel site="site" context="{{storedContexts[site.context]['color']}}"></page-panel>-->
-          <!--</li>-->
-        <!--</ul>-->
 
-        <!--<ul ng-repeat="(key, value) in allSites | groupBy: 'context'" class="panel-group">-->
-            <!--<li ng-repeat="site in value">-->
-              <!--<page-panel site="site" context-color="{{storageData.contextOptions[site.context].color}}"></page-panel>-->
-            <!--</li>-->
-        <!--</ul>-->
-
-        <ul ng-repeat="(key, value) in newSites | groupBy: 'context'" class="panel-group">
-          <li ng-repeat="site in value">
-            <page-panel site="site"></page-panel>
-          </li>
-        </ul>
+        <div ng-repeat="context in newSites" class="panel-group">
+          <div class="context-options">
+            <div class="context-name">Kontext</div>
+            <div class="context-info">Info</div>
+            <div class="context-toggle"></div>
+          </div>
+            <page-panel site="site" ng-repeat="site in context.sites" ></page-panel>
+        </div>
 
     </div>
 

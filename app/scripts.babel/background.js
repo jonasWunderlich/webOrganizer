@@ -103,6 +103,73 @@ function setupStorage() {
 }
 
 
+
+
+//
+///**
+// * @ngdoc method
+// * @name getStoredContexts
+// * @methodOf newTab.StorageService
+// * @description Checks if Context-Configuration already exists in the Storage - If not creates it
+// * @returns {promise}
+// */
+//var constructContextOptions = function() {
+//  chrome.storage.local.get('newContextOptions',function(newContextOptions){
+//    console.log('Looking for newContentOptions', newContextOptions);
+//    if(Object.keys(newContextOptions).length === 0) {
+//      console.log('newContextOptions not found');
+//      chrome.bookmarks.getTree(function(bookmarkTree) {
+//        writeNewContextOptions(bookmarks);
+//      });
+//    } else {
+//      console.log('newContextOptions found');
+//      //TODO: update newContextOptions
+//    }
+//    return newContextOptions;
+//  });
+//};
+//
+//
+///**
+// * @ngdoc method
+// * @name writeContextOptions
+// * @methodOf newTab.StorageService
+// * @description
+// * @param bookmarks
+// */
+//var writeNewContextOptions = function(bookmarks) {
+//  //TODO: Maybe this can be put into the getStoredContext-method later
+//  var _contextOptions = setupContextOptions(bookmarks);
+//  //TODO: This needs to be put as a function to the ChromeApi that returns a promise
+//  chrome.storage.local.set({'contextOptions': _contextOptions}, function() {});
+//};
+//
+///**
+// * @ngdoc method
+// * @name setupContextOptions
+// * @methodOf newTab.StorageService
+// * @description Recursive Function for writing Context Configuration Data in the Storage
+// * @param data
+// * @returns {{}}
+// */
+//var setupContextOptions = function(data) {
+//  var bookmarkFolder = _.filter(data, 'children');
+//  var result = {};
+//  _.each(bookmarkFolder, function(item) {
+//    var entry = _.omit(item, 'id', 'dateGroupModified', 'dateAdded', 'children');
+//    entry.color = randomColor();
+//    result[item.id] = entry;
+//    // TODO: Maybe its better to filter empty objects before the recursion
+//    _.merge(result, setupContextOptions(item.children))
+//  });
+//  return result;
+//};
+//
+
+
+
+
+
 /**
  * @name setupTabMenu
  * @description Creates an entry into the ContextMenu and listens to ClickEvents

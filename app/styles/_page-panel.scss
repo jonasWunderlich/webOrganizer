@@ -1,10 +1,12 @@
+$panel-overlap: 40px;
+
 .page-panel  {
   float: left;
   font-size: 12px;
   width: 100px;
   display: inline-table;
-//  margin: 2px;
-//  box-shadow: 5px 4px 14px -8px rgba(0, 0, 0, 0.72);
+  margin-left: -$panel-overlap;
+  box-shadow: -20px 19px 12px -19px rgba(0, 0, 0, 0.22);
   cursor: pointer;
   margin-top: 5px;
 
@@ -23,12 +25,58 @@
     box-shadow: none;
   }
 
+  &:hover {
+    z-index: 5;
+    position: relative;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    transition: margin .2s ease-out, box-shadow .2s ease-out;
+    box-shadow: 0px 22px 52px -18px rgb(0, 0, 0);
+  }
 }
 
 .panel-group {
   margin-right: 5px;
 }
 
+.context-options {
+  float: left;
+  margin: 25px (0px+$panel-overlap) 0px 50px;
+  padding: 0 10px;
+  height: 104px;
+  &:before {
+    content: "{";
+    position: absolute;
+    font-size: 130px;
+    margin-top: -40px;
+    margin-left: -40px;
+    color: #FFF;
+    opacity: .2;
+  }
+
+  .context-name {
+    margin: 10px 0;
+    text-align: center;
+  }
+  .context-info {
+    margin: 10px 0;
+    text-align: center;
+  }
+  .context-toggle {
+    background: #000;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin: 10px auto;
+    &:hover {
+      background: #FFF;
+    }
+  }
+}
+
+.panel-group:first-child .context-options {
+  margin-left: 0;
+}
 
 
 .panel-tab {
@@ -78,8 +126,8 @@
     }
   }
   .bookmark & {
-    background: #353535;
-    opacity: 0.7;
+    //background: #353535;
+    //opacity: 0.1;
   }
   .tab & {
     //    background: yellow;
@@ -99,7 +147,8 @@
 .panel-content {
   display: block;
   color: #000;
-  background: rgba(255, 255, 255, 0.77);
+  background: #FFF;
+//  opacity: .77;
   min-height: 70px;
   padding: 5px;
   .developer_ch & {
