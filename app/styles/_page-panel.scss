@@ -70,6 +70,8 @@ $panel-overlap: 40px;
     height: 20px;
     border-radius: 10px;
     margin: 10px auto;
+    box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
     &:hover {
       background: #FFF;
     }
@@ -80,19 +82,35 @@ $panel-overlap: 40px;
 .panel-tab {
   height: 20px;
   position: relative;
+  .ear {
+    height: 20px;
+    border-radius: 5px 5px 0 0;
+  }
   .panel-tab-ear {
     position: absolute;
     bottom: 0;
     display: table-caption;
     width: 100px;
-    height: 20px;
-    border-radius: 5px 5px 0 0;
     background: #AD3535;
     cursor: pointer;
+
     &:hover {
       padding: 1px 0;
       height: 14px;
       transition: height 2ms;
+    }
+  }
+  .panel-open-tab-ear {
+    display: none;
+    .page-panel:hover & {
+      display: block;
+      width: 11px;
+      margin-left: 14px;
+      font-size: 20px;
+      line-height: 16px;
+      padding: 0 10px;
+      border: 1px dashed rgba(0, 0, 0, 0.47);
+      border-bottom: 0;
     }
   }
   .page-panel:hover & {
