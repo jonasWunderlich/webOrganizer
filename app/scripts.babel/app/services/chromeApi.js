@@ -10,6 +10,8 @@
 angular.module('newTab')
   .service('ChromeApi', function ($log, $http, $q, configuration) {
 
+    var data = {};
+
     /**
      * @ngdoc method
      * @name getBookmarks
@@ -18,17 +20,26 @@ angular.module('newTab')
      * @returns {promise}
      */
     var getBookmarks = function() {
+
       var deferred = $q.defer();
-      chrome.bookmarks.getTree(function(response) {
-        if (response) {
-          $log.debug('Bookmark-Tree data retrieved:', response);
-          //deferred.resolve(response[0].children[0].children);
-          deferred.resolve(response);
-        } else {
-          $log.debug('Unable to retrieve Bookmark-Tree data', response);
-          deferred.reject('unable to retrieve Bookmark-Tree data');
-        }
-      });
+
+      if(data.bookmarkTree) {
+        $log.debug('BookmarkTree received without API-Call');
+        deferred.resolve(data.bookmarkTree);
+      } else {
+        chrome.bookmarks.getTree(function(response) {
+          if (response) {
+            $log.debug('BookmarkTree retrieved by API-Call:', response);
+            //deferred.resolve(response[0].children[0].children);
+            data.bookmarkTree = response;
+            deferred.resolve(response);
+          } else {
+            $log.debug('Unable to retrieve Bookmark-Tree data', response);
+            deferred.reject('unable to retrieve Bookmark-Tree data');
+          }
+        });
+      }
+
       return deferred.promise;
     };
 
@@ -41,21 +52,29 @@ angular.module('newTab')
      * @returns {promise}
      */
     var getOpenTabs = function(windowId) {
+
       var deferred = $q.defer();
-      var _config = {};
-      chrome.tabs.query(_config, function(response) {
-        if(response) {
-          var _activeWindow = 'all';
-          if(windowId !== undefined) {
-            _activeWindow = windowId;
+
+      if(data.openTabs) {
+        $log.debug('Tabs received without API-Call');
+        deferred.resolve(data.openTabs);
+      } else {
+        var config = {};
+        chrome.tabs.query(config, function(response) {
+          if(response) {
+            var _activeWindow = 'all';
+            if(windowId !== undefined) {
+              _activeWindow = windowId;
+            }
+            $log.debug('Tabs in '+_activeWindow+' retrieved by API-Call:', response);
+            data.openTabs = response;
+            deferred.resolve(response);
+          } else {
+            $log.debug('Unable to retrieve opened Tabs', response);
+            deferred.reject('Unable to retrieve opened Tabs');
           }
-          $log.debug('opened Tabs in '+_activeWindow+' retrieved:', response);
-          deferred.resolve(response);
-        } else {
-          $log.debug('Unable to retrieve opened Tabs', response);
-          deferred.reject('Unable to retrieve opened Tabs');
-        }
-      });
+        });
+      }
       return deferred.promise;
     };
 
@@ -67,17 +86,26 @@ angular.module('newTab')
      * @returns {promise}
      */
     var getHistory = function() {
+
       var deferred = $q.defer();
-      var config = configuration.getHistoryConfiguration();
-      chrome.history.search(config, function(response) {
-        if(response) {
-          $log.debug('getHistory data retrieved:');
-          deferred.resolve(response)
-        } else {
-          $log.debug('Unable to retrive getHistory', response);
-          deferred.reject('Unable to retrieve History');
-        }
-      });
+
+      if(data.history) {
+        $log.debug('History received without API-Call');
+        deferred.resolve(data.history);
+      } else {
+        var config = configuration.getHistoryConfiguration();
+        chrome.history.search(config, function(response) {
+          if(response) {
+            $log.debug('History received with API-Call');
+            data.history = response;
+            deferred.resolve(response)
+          } else {
+            $log.debug('Unable to retrive getHistory', response);
+            deferred.reject('Unable to retrieve History');
+          }
+        });
+      }
+
       return deferred.promise;
     };
 
@@ -90,17 +118,25 @@ angular.module('newTab')
      * @returns {promise}
      */
     var getVisits = function(page) {
+
       var deferred = $q.defer();
-      var _config = {'url': page.url };
-      chrome.history.getVisits(_config, function(response) {
-        if(response) {
-          // $log.debug('getVisits data retrieved:', response);
-          deferred.resolve(response);
-        } else {
-          $log.debug('Unable to retrieve getVisits', response);
-          deferred.reject('Unable to retrieve getVisits');
-        }
-      });
+
+      if(data.visits.page) {
+        $log.debug('siteVisits received without API-Call',data.visits.page);
+        deferred.resolve(data.visits.page);
+      } else {
+        var config = {'url': page.url };
+        chrome.history.getVisits(config, function(response) {
+          if(response) {
+            data.visits.page = response;
+            deferred.resolve(response);
+          } else {
+            $log.debug('Unable to retrieve getVisits', response);
+            deferred.reject('Unable to retrieve getVisits');
+          }
+        });
+      }
+
       return deferred.promise;
     };
 
@@ -113,56 +149,39 @@ angular.module('newTab')
      * @returns {promise}
      */
     var getStorage = function(variable) {
+
       var deferred = $q.defer();
-      chrome.storage.local.get(variable, function(response) {
-        if (response) {
-          if(variable !== undefined) {
-            if (response[variable] !== undefined) {
-              var _storageData = response[variable];
-              $log.debug('Storage data for '+variable+' retrieved:');
-              deferred.resolve(_storageData);
-            } else {
-              $log.debug('Storage variable '+variable+' is not set');
-              deferred.reject('unable to retrieve Storage data');
+
+      if(data[variable]) {
+        $log.debug('Quota retrieved without API-Call',data[variable]);
+        deferred.resolve(data[variable]);
+      } else {
+        chrome.storage.local.get(variable, function(response) {
+          if (response) {
+            if(variable !== undefined) {
+              if (response[variable] !== undefined) {
+                var _storageData = response[variable];
+                $log.debug('Storage data for '+variable+' retrieved by API-Call');
+                data[variable] = _storageData;
+                deferred.resolve(_storageData);
+              } else {
+                $log.debug('Storage variable '+variable+' is not set');
+                deferred.reject('unable to retrieve Storage data');
+              }
             }
+            else {
+              $log.debug('Complete Storage Data retrieved');
+              deferred.resolve(response);
+            }
+          } else {
+            $log.debug('Unable to retrieve Storage data', response);
+            deferred.reject('unable to retrieve Storage data');
           }
-          else {
-            $log.debug('Complete Storage Data retrieved');
-            deferred.resolve(response);
-          }
-        } else {
-          $log.debug('Unable to retrieve Storage data', response);
-          deferred.reject('unable to retrieve Storage data');
-        }
-      });
+        });
+      }
+
       return deferred.promise;
     };
-
-    /**
-     * @ngdoc method
-     * @name getStoredConfiguration
-     * @methodOf newTab.ChromeApi
-     * @description get Explicitly the Configuration-Data from the Local Storage
-     * @returns {promise}
-     */
-    //var getStoredConfiguration = function() {
-    //  var deferred = $q.defer();
-    //  getStorage('configuration')
-    //    .then(function(response) {
-    //      if(response) {
-    //        $log.debug('stored Configuration found', response);
-    //        return response;
-    //      } else {
-    //        $log.debug('no stored Configuration found trying to build');
-    //        var configObject = {
-    //          'version': 0.01
-    //        };
-    //        //TODO: Put this in an extra Function that returns a promise
-    //        chrome.storage.local.set({'configuration':configObject}, function(response) {});
-    //      }
-    //    });
-    //  return deferred.promise;
-    //};
 
     /**
      * @ngdoc method
@@ -171,17 +190,26 @@ angular.module('newTab')
      * @description get Bytes so far used in the storage (5MB locally available)
      * @returns {promise}
      */
-    var getStorageBytesInUse = function() {
+    var getStorageQuota = function() {
+
       var deferred = $q.defer();
-      chrome.storage.local.getBytesInUse(function(response) {
-        if (response) {
-          $log.debug('Storage Bytes retrieved:', response);
-          deferred.resolve(response);
-        } else {
-          $log.debug('Unable to get Storage Usage', response);
-          deferred.reject('Unable to get Storage Usage');
-        }
-      });
+
+      if(data.quota) {
+        $log.debug('Quota retrieved without API-Call',data.quota);
+        deferred.resolve(data.quota);
+      } else {
+        chrome.storage.local.getBytesInUse(function(response) {
+          if (response) {
+            $log.debug('Quota retrieved by API-Call:', response);
+            data.quota = response;
+            deferred.resolve(response);
+          } else {
+            $log.debug('Unable to get Storage Usage', response);
+            deferred.reject('Unable to get Storage Usage');
+          }
+        });
+      }
+
       return deferred.promise;
     };
 
@@ -190,9 +218,8 @@ angular.module('newTab')
       getOpenTabs: getOpenTabs,
       getHistory: getHistory,
       getVisits: getVisits,
-      getStorageBytesInUse: getStorageBytesInUse,
+      getStorageQuota: getStorageQuota,
       getStorage: getStorage
-      //getStoredConfiguration: getStoredConfiguration
     };
 
   });
