@@ -130,7 +130,6 @@ angular.module('newTab')
         context.active = !context.active;
       }
 
-
       if(deactivatedTabs[context]) {
         $scope.activateContext(context);
       } else {
@@ -186,9 +185,5 @@ angular.module('newTab')
         $log.debug('Tabs removed',callback);
       });
     };
-
-
-
-
 
   });
