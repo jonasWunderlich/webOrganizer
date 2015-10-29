@@ -231,7 +231,7 @@ a {
   opacity: 1;
 }
 
-/* line 17, main.scss */
+/* line 18, main.scss */
 .debug {
   background: yellow;
   position: absolute;
@@ -242,24 +242,29 @@ a {
   overflow: auto;
   opacity: .8;
 }
-/* line 26, main.scss */
+/* line 27, main.scss */
 .debug:hover {
   width: 70%;
 }
-/* line 31, main.scss */
+/* line 32, main.scss */
 .debug pre {
   color: #0048FF;
   max-height: 200px;
   overflow: hidden;
 }
-/* line 35, main.scss */
+/* line 36, main.scss */
 .debug pre:hover {
   max-height: inherit;
 }
 
-/* line 42, main.scss */
+/* line 43, main.scss */
 #panel-overview {
   margin-left: 40px;
+}
+
+/* line 47, main.scss */
+.ng-hide {
+  display: none;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -54,6 +54,18 @@ angular.module('newTab')
       return deferred.promise;
     },
 
+    /*  This function is useful when we got somehow the site data and we wish to store it or update the pool and get a site instance in return */
+    setSite: function(siteData) {
+      var scope = this;
+      var site = this._search(siteData.id);
+      if (site) {
+        site.setData(siteData);
+      } else {
+        site = scope._retrieveInstance(siteData);
+      }
+      return site;
+    },
+
     /* Use this function in order to get instances of all the sites */
     loadAllSites: function() {
       var scope = this;
@@ -95,22 +107,18 @@ angular.module('newTab')
 
       $q.all([
         ChromeApi.getHistory(),
-        ChromeApi.getBookmarks(),
-        ChromeApi.getStorage(),
-        ChromeApi.getOpenTabs()
+        ChromeApi.getStorage('storedContextUrls'),
+        ChromeApi.getStorage('contextOptions')
       ]).then(function(data) {
 
         var sites = data[0];
-        var bookmarks = data[1];
-        var storage = data[2];
-        var tabs = data[3];
+        var storedContextUrls = data[1];
+        var contextOptions = data[2];
 
-
+        var i = 0;
         var sitesToRetrieve = [];
 
         sites.reverse().forEach(function (siteData) {
-
-
 
           /**
            * Set Bookmark & Bookmark-Context if found
@@ -131,9 +139,7 @@ angular.module('newTab')
                 indexNeutralContext++;
               } else {
                 var _subStringOfSiteDataUrl = siteData.url.substr(0,17);
-                var _storedContext = storage._storedContextUrls[_subStringOfSiteDataUrl];
-                $log.debug("Set found Context", storage._storedContextUrls[_subStringOfSiteDataUrl]);
-                siteData.context = _storedContext;
+                siteData.context = storedContextUrls[_subStringOfSiteDataUrl];
               }
 
             }
@@ -205,22 +211,56 @@ angular.module('newTab')
               var site = scope._retrieveInstance(siteData.id, siteData);
               sitesToRetrieve.push(site);
 
+              i++;
 
-              var result = _.chain(sites)
-                .groupBy("context")
-                .pairs()
-                .map(function(currentItem) {
-                  return _.object(_.zip(["context", "sites"], currentItem));
-                })
-                .value();
-              console.log(result);
+              if (i === sites.length) {
 
-              deferred.resolve(result);
-              //deferred.resolve(sites);
+                var contextArray = _.chain(sites)
+                  .groupBy("context")
+                  .pairs()
+                  .map(function(currentItem) {
+                    return _.object(_.zip(["context", "sites"], currentItem));
+                  })
+                  .value();
+
+                //var r2 = _.map(contextOptions, function(item){
+                //  return _.extend(item, _.findWhere(contextArray, { id: item.context }));
+                //});
+
+                //var r2 = _.forEach(contextArray, function(item){
+                //  $log.debug("id found",item.context);
+                //  var cid = item.context;
+                //  $log.debug("id found",contextOptions.cid);
+                //  if(typeof contextOptions[item.context] !== 'undefined') {
+                //    item.id = contextOptions[item.context].id;
+                //  }
+                //});
+                //$log.debug("NEW",r2);
+
+                //result.color = contextOptions[result.context];
+                //result.color = "asdf";
+                //$log.debug(r2);
+                //$log.debug(sites);
+                //$log.debug(contextOptions);
+                //$log.debug(contextArray);
+
+                deferred.resolve(contextArray);
+                //deferred.resolve(sites);
+
+
+              }
+
+
 
             });
+
+
           });
         });
+
+
+
+
       });
 
       // 2. Durchlauf (Iteration mit Tiefe n)
@@ -238,32 +278,24 @@ angular.module('newTab')
       // TODO: filter unwanted sites / urls
 
       return deferred.promise;
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*  This function is useful when we got somehow the site data and we wish to store it or update the pool and get a site instance in return */
-    setSite: function(siteData) {
-      var scope = this;
-      var site = this._search(siteData.id);
-      if (site) {
-        site.setData(siteData);
-      } else {
-        site = scope._retrieveInstance(siteData);
-      }
-      return site;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   };
 
   return sitesManager;
 });
+
+

@@ -1,7 +1,8 @@
 <div class="page-panel" ng-class="getPanelClasses(site)">
 
   <div class="panel-tab" >
-    <div class="panel-tab-ear" ng-if="isTab(site)" ng-click="closeTab(site)"></div>
+    <div class="panel-tab-ear ear" ng-if="isTab(site)" ng-click="closeTab(site)"></div>
+    <div class="panel-open-tab-ear ear" ng-if="!isTab(site)" ng-click="createTab(site)">+</div>
   </div>
 
   <div class="panel-head" style="{{getContextColor(site)}}">

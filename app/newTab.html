@@ -16,37 +16,35 @@
 
 <div id="history-content" ng-controller="NewTabPageController">
 
-    <div class="debug">
-      <button ng-click="reload()">refresh</button>
-      <h3>History</h3>
-        <pre>{{allSites | json}}</pre>
-        <h3>Bookmarks</h3>
-        <pre>{{bookmarks | json}}</pre>
-        <h3>Storage</h3>
-        {{storageBytesInUse}} Bytes / 5MB // {{storageBytesInUse / 5242880 * 100}}%
-        <pre>{{storageData | json}}</pre>
-        <h3>Tabs</h3>
-        <pre>{{openedTabs|json}}</pre>
-    </div>
+    <!--<div class="debug">-->
+      <!--<button ng-click="reload()">refresh</button>-->
+      <!--<h3>History</h3>-->
+        <!--<pre>{{allSites | json}}</pre>-->
+        <!--<h3>Bookmarks</h3>-->
+        <!--<pre>{{bookmarks | json}}</pre>-->
+        <!--<h3>Storage</h3>-->
+        <!--{{storageBytesInUse}} Bytes / 5MB // {{storageBytesInUse / 5242880 * 100}}%-->
+        <!--<pre>{{storageData | json}}</pre>-->
+        <!--<h3>Tabs</h3>-->
+        <!--<pre>{{openedTabs|json}}</pre>-->
+    <!--</div>-->
 
     <div id="panel-overview">
 
         <div ng-repeat="context in newSites" class="panel-group">
           <div class="context-options">
-            <div class="context-name">Kontext</div>
-            <div class="context-info">Info</div>
-            <div class="context-toggle"></div>
+            <div class="context-toggle" style="{{getContextColor(context.context)}}"
+                 ng-click="toggleContext(context)"></div>
+            <div class="context-name">{{getContextTitle(context.context)}}</div>
+            <!--<div class="context-info">Info</div>-->
           </div>
-            <page-panel site="site" ng-repeat="site in context.sites" ></page-panel>
+            <div class="pages-wrapper" ng-hide="context.active">
+              <page-panel site="site" ng-repeat="site in context.sites" ></page-panel>
+            </div>
         </div>
 
     </div>
 
-</div>
-
-<div id="sidebar">
-    <div id="bookmarklist"></div>
-    <div class="clear"></div>
 </div>
 
 <!-- build:js scripts/vendor.js -->

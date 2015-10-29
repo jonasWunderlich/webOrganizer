@@ -8,7 +8,7 @@
  */
 
 angular.module('newTab')
-  .controller('NewTabPageController', function ($scope, $log, $window, BrowserHistory, StorageService, sitesManager) {
+  .controller('NewTabPageController', function ($scope, $log, $q, $window, BrowserHistory, StorageService, sitesManager) {
 
     var deactivatedTabs = [];
 
@@ -18,36 +18,126 @@ angular.module('newTab')
      * @methodOf newTab.NewTabPageController
      * @description Write all the Data in the scope
      */
-    var getData = function() {
+    var _getData = function() {
 
+      //BrowserHistory.getProcessedHistory().then(function(d) {
+      //  $scope.allSites = d.reverse();
+      //});
+      //BrowserHistory.getBookmarks().then(function(d) {
+      //});
+      //BrowserHistory.getOpenTabs().then(function(d) {
+      //  $scope.openedTabs = d;
+      //});
+      //StorageService.getStorageBytesInUse().then(function(d) {
+      //  $scope.storageBytesInUse = d;
+      //});
+      //StorageService.getStorage().then(function(d) {
+      //  $scope.storageData = d;
+      //});
+      //StorageService.buildStoredContextUrls().then(function(d) {
+      //  $scope.storageContextUrls = d;
+      //});
 
-
-
-      BrowserHistory.getProcessedHistory().then(function(d) {
-        $scope.allSites = d.reverse();
-      });
-      BrowserHistory.getBookmarks().then(function(d) {
-        $scope.bookmarks = d;
-      });
-      BrowserHistory.getOpenTabs().then(function(d) {
-        $scope.openedTabs = d;
-      });
-      StorageService.getStorageBytesInUse().then(function(d) {
-        $scope.storageBytesInUse = d;
-      });
-      StorageService.getStorage().then(function(d) {
-        $scope.storageData = d;
-      });
-      StorageService.buildStoredContextUrls().then(function(d) {
-        $scope.storageContextUrls = d;
-      });
-      StorageService.getStoredContexts().then(function (d) {
-        $scope.contextOptions = d;
-        sitesManager.loadAllSitesEnhanced().then(function(sites) {
-          $scope.newSites = sites.reverse();
-        });
+      $q.all([
+        sitesManager.loadAllSitesEnhanced(),
+        StorageService.getStoredContexts()
+      ]).then(function(data) {
+          $scope.newSites = data[0].reverse();
+          $scope.contextOptions = data[1]
       });
     };
+
+    var _reload = function() {
+      $window.location.reload();
+    };
+
+    /**
+     * @ngdoc method
+     * @name _init
+     * @methodOf newTab.NewTabPageController
+     * @description Run Functions at Startup
+     */
+    var _init = function() {
+      _getData();
+    };
+
+    _init();
+
+
+
+
+    /**
+     * @ngdoc method
+     * @name getContextColor
+     * @methodOf newTab.NewTabPageController
+     * @description Returns Background-Style for Context-Color
+     * @returns {string} Background-Style for Context
+     */
+    $scope.getContextColor = function(context) {
+      if(context !== 'undefined' ) {
+        if(context.indexOf('neutral') < 0 && context.indexOf(',') < 0) {
+          var color = StorageService.getContextColor(context);
+          return 'background:'+color;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name getContextTitle
+     * @methodOf newTab.NewTabPageController
+     * @description Returns Title of Context
+     * @returns {string} Title of Context
+     */
+    $scope.getContextTitle = function(context) {
+      if(context !== 'undefined' ) {
+        if(context.indexOf('neutral') < 0 && context.indexOf(',') < 0) {
+          return StorageService.getContextTitle(context);
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name contextIsActive
+     * @methodOf newTab.NewTabPageController
+     * @description Returns Title of Context
+     * @returns {string} Title of Context
+     */
+    $scope.contextIsActive = function(context) {
+      if(context !== 'undefined' ) {
+        if(context.indexOf('neutral') < 0 && context.indexOf(',') < 0) {
+          return $scope.contextOptions[context].active;
+        }
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name toggleContext
+     * @methodOf newTab.pagePanel
+     * @description Toggles the activity of a context
+     * @param {object} context
+     */
+    $scope.toggleContext = function(context) {
+      $log.debug('Toggle Context', context);
+      $log.debug('Deactivated Tabs', deactivatedTabs);
+      $log.debug('Active Context', context.active);
+
+      if(typeof context.active === 'undefined' ) {
+        context.active = false;
+      } else {
+        context.active = !context.active;
+      }
+
+
+      if(deactivatedTabs[context]) {
+        $scope.activateContext(context);
+      } else {
+        $scope.deactivateContext(context);
+      }
+    };
+
 
     /**
      * @ngdoc method
@@ -64,7 +154,6 @@ angular.module('newTab')
           $log.debug('Tab created', callback);
         });
       });
-      //TODO:
     };
 
     /**
@@ -78,8 +167,8 @@ angular.module('newTab')
       $log.debug('Deactivate Context / close all Tabs');
       var removeTabs = [];
       var indexesOfTabsToRemove = [];
-      $scope.allSites.forEach(function(site) {
-        if(site.tab && site.context === context) {
+      context.sites.forEach(function(site) {
+        if(site.tab) {
           var tabToRemove = {
             windowId: site.tab.windowId,
             index: site.tab.id,
@@ -97,25 +186,6 @@ angular.module('newTab')
         $log.debug('Tabs removed',callback);
       });
     };
-
-    $scope.reload = function() {
-      $window.location.reload();
-    };
-
-    /**
-     * @ngdoc method
-     * @name _init
-     * @methodOf newTab.NewTabPageController
-     * @description Run Functions at Startup
-     */
-    var _init = function() {
-      getData();
-    };
-
-    _init();
-
-
-
 
 
 

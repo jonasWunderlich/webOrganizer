@@ -14,7 +14,7 @@
  */
 
 angular.module('newTab')
-  .directive('pagePanel', function($log) {
+  .directive('pagePanel', function($log, StorageService) {
     return {
       restrict: 'EA',
       replace: true,
@@ -35,7 +35,8 @@ angular.module('newTab')
         scope.getContextColor = function() {
           if(typeof scope.site.context !== 'undefined' ) {
             if(scope.site.context.indexOf('neutral') !== 0) {
-              return 'background:'+scope.$parent.contextOptions[scope.site.context].color;
+              var color = StorageService.getContextColor(scope.site.context);
+              return 'background:'+color;
             }
           }
         };
@@ -48,10 +49,8 @@ angular.module('newTab')
          * @returns {string} Background-Style for Context if Bookmark
          */
         scope.getContextColorIfBookmark = function() {
-          if(typeof scope.site.context !== 'undefined' && scope.site.bookmark) {
-            if(scope.site.context.indexOf('neutral') !== 0) {
-              return 'background:'+scope.$parent.contextOptions[scope.site.context].color;
-            }
+          if(scope.site.bookmark) {
+            return scope.getContextColor();
           }
         };
 
@@ -169,30 +168,6 @@ angular.module('newTab')
           scope.site.title = scope.site.title.split(' - Google-Suche')[0];
           return scope.site.title !== '' ? scope.site.title : scope.site.url.split('#')[1];
         };
-
-
-
-
-
-
-        /**
-         * @ngdoc method
-         * @name toggleContext
-         * @methodOf newTab.pagePanel
-         * @description Toggles the activity of a context
-         * @param {object} context
-         */
-        scope.toggleContext = function(context) {
-          $log.debug('Toggle Context', context);
-          $log.debug('Toggle Context', deactivatedTabs);
-
-          if(deactivatedTabs[context]) {
-            scope.createTabs(context);
-          } else {
-            scope.deactivateContext(context);
-          }
-        };
-
 
       }
     }

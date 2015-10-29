@@ -10,6 +10,8 @@
 angular.module('newTab')
   .service('StorageService', function ($log, $http, $q, ChromeApi) {
 
+    var storageData = {};
+
     /**
      * @ngdoc method
      * @name getStoredContexts
@@ -18,20 +20,28 @@ angular.module('newTab')
      * @returns {promise}
      */
     var getStoredContexts = function() {
+
       var deferred = $q.defer();
-      ChromeApi.getBookmarks()
-        .then(function(bookmarks) {
-          ChromeApi.getStorage('contextOptions').then(function(contextOptions) {
-              $log.debug('Context Options found');
-              //TODO: For now Options are rewritten with every reload for Setting up the correct settings
-              writeContextOptions(bookmarks);
-              deferred.resolve(contextOptions);
-            }, function(error) {
-              $log.debug('Building New Context Options');
-              writeContextOptions(bookmarks);
-            }
-          );
-      });
+
+      if(storageData.storedContexts) {
+        $log.debug('Context-Options retrieved without API-Call');
+        deferred.resolve(storageData.storedContexts);
+      } else {
+        ChromeApi.getBookmarks().then(function(bookmarks) {
+
+          ChromeApi.getStorage('contextOptions').then(function(response) {
+            //TODO: For now Options are rewritten with every reload for Setting up the correct settings
+            storageData.storedContexts = response;
+            $log.debug('Using the Context-Options found in Storage',response);
+            writeContextOptions(bookmarks);
+            deferred.resolve(response);
+          }, function(error) {
+            $log.debug('Building New Context Options', error);
+            writeContextOptions(bookmarks);
+          });
+        });
+      }
+
       return deferred.promise;
     };
 
@@ -45,44 +55,44 @@ angular.module('newTab')
      */
     var writeContextOptions = function(bookmarks) {
       //TODO: Maybe this can be put into the getStoredContext-method later
-      var _contextOptions = setupContextOptions(bookmarks);
+      var _contextOptions = createContextOptionForBookmarkFolder(bookmarks);
       //TODO: This needs to be put as a function to the ChromeApi that returns a promise
-      chrome.storage.local.set({'contextOptions': _contextOptions}, function(result) {
-        $log.debug('contextOptions written to Storage', result)
+      chrome.storage.local.set({'contextOptions': _contextOptions}, function() {
+        $log.debug('contextOptions written to Storage')
       });
     };
 
     /**
      * @ngdoc method
-     * @name setupContextOptions
+     * @name createContextOptionForBookmarkFolder
      * @methodOf newTab.StorageService
-     * @description Recursive Function for writing Context Configuration Data in the Storage
+     * @description Recursive Function for creating the Configuration of a Context for a Bookmark-Folder
      * @param data
      * @returns {{}}
      */
-    var setupContextOptions = function(data) {
+    var createContextOptionForBookmarkFolder = function(data) {
       var bookmarkFolder = _.filter(data, 'children');
       var result = {};
       _.each(bookmarkFolder, function(item) {
         var childrenOfFolder = _.filter(item.children,function(result){
           return typeof result.children === 'undefined';
         });
-        var entry = _.omit(item, 'id', 'dateGroupModified', 'dateAdded', 'children');
+        var entry = _.omit(item, 'dateGroupModified', 'dateAdded', 'children');
         entry.color = randomColor();
+        entry.active = true;
         entry.children = childrenOfFolder;
         result[item.id] = entry;
         // TODO: Maybe its better to filter empty objects before the recursion
-        _.merge(result, setupContextOptions(item.children))
+        _.merge(result, createContextOptionForBookmarkFolder(item.children))
       });
       return result;
     };
-
 
     /**
      * @ngdoc method
      * @name buildStoredContextUrls
      * @methodOf newTab.StorageService
-     * @description Builds Array that references the Urls of the Bookmarks to its context
+     * @description Builds Array that references all the Bookmark-Urls to its parentFolder as Context
      * @returns {promise}
      */
     var buildStoredContextUrls = function() {
@@ -92,41 +102,93 @@ angular.module('newTab')
 
       getStoredContexts().then(function(storedContext) {
 
-        _.each(storedContext, function(result) {
+        _.each(storedContext, function(context) {
+          _.each(context.children, function(contextBookmark) {
 
-          _.each(result.children, function(result2) {
-
-            var _subStr = result2.url.substr(0,17);
+            var _subStr = contextBookmark.url.substr(0,17);
             if(typeof _storedContextUrls[_subStr] === 'undefined') {
-              _storedContextUrls[_subStr] = result2.parentId;
-            } else if(_lastContextIndex !== result2.parentId) {
-              _storedContextUrls[_subStr] = _storedContextUrls[_subStr]+','+result2.parentId;
+              _storedContextUrls[_subStr] = contextBookmark.parentId;
+            } else if(_lastContextIndex !== contextBookmark.parentId) {
+              _storedContextUrls[_subStr] = _storedContextUrls[_subStr]+','+contextBookmark.parentId;
             }
-            _lastContextIndex = result2.parentId;
+            _lastContextIndex = contextBookmark.parentId;
           });
         });
 
-        chrome.storage.local.set({'_storedContextUrls': _storedContextUrls}, function() {
-          $log.debug('stored _storedContextUrls');
+        chrome.storage.local.set({'storedContextUrls': _storedContextUrls}, function() {
+          $log.debug('storedContextUrls have been put to local Storage');
           deferred.resolve(_storedContextUrls);
         });
 
-        //$log.debug('Try filtering Children of Bookmarks in Context',_filter);
-        //var _filter = _.each(_contextOptions, function(result){
-        //  _.filter(result.children, function(result2){
-        //    return result2.url.substr(0,20) === 'http://www.vr-bank-m';
-        //  });
-        //});
       });
       return deferred.promise;
     };
 
 
+    /**
+     * @ngdoc method
+     * @name filterContextOptionsByUrl
+     * @methodOf newTab.StorageService
+     * @description Returns filtered ContextOptions that match the first n Characters of a given Url
+     * @returns {promise}
+     */
+    var filterContextOptionsByUrl = function(url) {
+
+      var deferred = $q.defer();
+      var stringLength= 20;
+      var shortenedUrl = url.substr(0,stringLength);
+
+      getStoredContexts().then(function(storedContext) {
+
+        var filteredContexOptions = _.each(storedContext, function(context) {
+          _.filter(context.children, function(contextBookmark){
+            return contextBookmark.url.substr(0,stringLength) === shortenedUrl;
+          });
+        });
+        deferred.resolve(filteredContexOptions);
+
+      });
+      return deferred.promise;
+    };
+
+
+    /**
+     * @ngdoc method
+     * @name buildStoredContextUrls
+     * @methodOf newTab.StorageService
+     * @description Builds Array that references all the Bookmark-Urls to its parentFolder as Context
+     * @returns {promise}
+     */
+    var getContextColor = function(contextID) {
+
+      if(storageData.storedContexts[contextID]) {
+        return storageData.storedContexts[contextID].color;
+      } else {
+        $log.error('Get Color for Context '+contextID+' FAILED');
+      }
+    };
+
+    /**
+     * @ngdoc method
+     * @name buildStoredContextUrls
+     * @methodOf newTab.StorageService
+     * @description Builds Array that references all the Bookmark-Urls to its parentFolder as Context
+     * @returns {promise}
+     */
+    var getContextTitle = function(contextID) {
+
+      if(storageData.storedContexts[contextID]) {
+        return storageData.storedContexts[contextID].title;
+      } else {
+        $log.error('Get Title for Context '+contextID+' FAILED');
+      }
+    };
+
+
     return {
-      getStorageBytesInUse: ChromeApi.getStorageBytesInUse,
-      getStorage: ChromeApi.getStorage,
-      getStoredConfiguration: ChromeApi.getStoredConfiguration,
       getStoredContexts: getStoredContexts,
+      getContextColor: getContextColor,
+      getContextTitle: getContextTitle,
       buildStoredContextUrls: buildStoredContextUrls
     };
 
