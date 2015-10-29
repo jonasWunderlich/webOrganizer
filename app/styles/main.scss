@@ -3,7 +3,12 @@
  * is actually exported to CSS.
  */
 
-//@import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// This imports bootstrap-styles
+@import "../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+// This imports angular inline-styles
+@import "../bower_components/angular/angular-csp.css";
+
 @import
 "variables"
 , "standards"
@@ -45,6 +50,6 @@
 }
 
 .ng-hide {
-  display: none;
+//  display: none;
 }
 

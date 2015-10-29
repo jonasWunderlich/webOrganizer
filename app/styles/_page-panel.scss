@@ -1,5 +1,47 @@
 $panel-overlap: 40px;
 
+
+.context-options {
+  float: left;
+  margin: 0px (0px+$panel-overlap) 0px 50px;
+  padding: 0 10px;
+  height: 119px;
+  .panel-group:first-child & {
+    margin-left: 0;
+  }
+  &:before {
+    content: "{";
+    position: absolute;
+    font-size: 114px;
+    margin-top: -27px;
+    margin-left: -40px;
+    color: #FFF;
+    opacity: .2;
+  }
+  .context-name {
+    margin: 10px 0;
+    text-align: center;
+  }
+  .context-info {
+    margin: 10px 0;
+    text-align: center;
+  }
+  .context-toggle {
+    background: #000;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    &:hover {
+      background: #FFF;
+    }
+  }
+}
+
+
+
 .page-panel  {
   float: left;
   font-size: 12px;
@@ -8,7 +50,6 @@ $panel-overlap: 40px;
   margin-left: -$panel-overlap;
   box-shadow: -20px 19px 12px -19px rgba(0, 0, 0, 0.22);
   cursor: pointer;
-  margin-top: 5px;
 
   //  Playground for background-image out of favicon
   //  background-size: 300px 300px;
@@ -28,7 +69,7 @@ $panel-overlap: 40px;
   &:hover {
     z-index: 5;
     position: relative;
-    margin-top: -5px;
+    margin-top: -10px;
     margin-bottom: 10px;
     transition: margin .2s ease-out, box-shadow .2s ease-out;
     box-shadow: 0px 22px 52px -18px rgb(0, 0, 0);
@@ -39,48 +80,11 @@ $panel-overlap: 40px;
   margin-right: 5px;
 }
 
-.context-options {
-  float: left;
-  margin: 25px (0px+$panel-overlap) 0px 50px;
-  padding: 0 10px;
-  height: 104px;
-  .panel-group:first-child & {
-    margin-left: 0;
-  }
-  &:before {
-    content: "{";
-    position: absolute;
-    font-size: 130px;
-    margin-top: -40px;
-    margin-left: -40px;
-    color: #FFF;
-    opacity: .2;
-  }
-  .context-name {
-    margin: 10px 0;
-    text-align: center;
-  }
-  .context-info {
-    margin: 10px 0;
-    text-align: center;
-  }
-  .context-toggle {
-    background: #000;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    margin: 10px auto;
-    box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    &:hover {
-      background: #FFF;
-    }
-  }
-}
+
 
 
 .panel-tab {
-  height: 20px;
+  height: 25px;
   position: relative;
   .ear {
     height: 20px;
@@ -124,7 +128,7 @@ $panel-overlap: 40px;
 .panel-head {
   background: #E9E9E9;
   padding: 4px;
-  height: 16px;
+  height: 24px;
   .panel-favicon {
     display: inline-block;
   }
@@ -139,6 +143,7 @@ $panel-overlap: 40px;
       opacity: 1;
     }
   }
+
   .bookmark & {
   }
   .tab & {
@@ -149,7 +154,7 @@ $panel-overlap: 40px;
   .www_google_d &, .www_google_c &{
     background: none;
     position: absolute;
-
+    height: 94px;
   }
 }
 
