@@ -153,8 +153,7 @@ angular.module('newTab')
       var deferred = $q.defer();
 
       if(data[variable]) {
-        //$log.debug('Storage for '+variable+' retrieved without API-Call',data[variable]);
-        $log.debug('Storage for '+variable+' retrieved without API-Call');
+        $log.debug('Quota retrieved without API-Call',data[variable]);
         deferred.resolve(data[variable]);
       } else {
         chrome.storage.local.get(variable, function(response) {
